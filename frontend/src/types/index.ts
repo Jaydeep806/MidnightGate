@@ -1,4 +1,10 @@
-export type NavigationPage = 'PROVER_GATEWAY' | 'PROTOCOL_VERIFIER' | 'CONTRACT_SPECS';
+export type NavigationPage = 
+  | 'PROVER_GATEWAY' 
+  | 'DEFI_VAULT_DEMO'
+  | 'GATE_BUILDER'
+  | 'CIRCUIT_VISUALIZER'
+  | 'PROTOCOL_VERIFIER' 
+  | 'CONTRACT_SPECS';
 
 export interface VerificationTier {
   id: string;
@@ -61,4 +67,13 @@ export interface ToastNotification {
   title: string;
   message: string;
   type: 'success' | 'error' | 'info';
+}
+
+export interface CustomGateConfig {
+  name: string;
+  targetProtocol: string;
+  thresholdAmount: number;
+  currency: string;
+  requiresAccreditation: boolean;
+  jurisdictionExclusion: string[];
 }

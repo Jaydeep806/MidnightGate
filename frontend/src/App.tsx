@@ -107,7 +107,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-midnight-950 text-slate-100 selection:bg-purple-600 selection:text-white">
+    <div className="min-h-screen flex flex-col font-sans text-slate-100 selection:bg-purple-600 selection:text-white">
       <Navbar
         activePage={activePage}
         onSelectPage={setActivePage}
@@ -235,7 +235,7 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-midnight-950/95 py-8 mt-16">
+      <footer className="border-t border-indigo-950/50 bg-slate-950/60 backdrop-blur-xl py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center space-x-3">
             <Moon className="w-4 h-4 text-purple-400" />

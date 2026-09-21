@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-indigo-950/60 bg-midnight-950/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-indigo-950/40 bg-slate-950/70 backdrop-blur-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo & Brand */}
         <div 
@@ -201,7 +201,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Sub-header Navigation Bar for tablet/mobile */}
-      <div className="flex xl:hidden items-center justify-around border-t border-slate-800/80 px-2 py-2 bg-midnight-950 overflow-x-auto text-[11px] font-mono">
+      <div className="flex xl:hidden items-center justify-around border-t border-slate-800/80 px-2 py-2 bg-slate-950/80 backdrop-blur-xl overflow-x-auto text-[11px] font-mono">
         <button
           onClick={() => onSelectPage('PROVER_GATEWAY')}
           className={`px-2.5 py-1.5 rounded-lg font-semibold flex items-center space-x-1 flex-shrink-0 ${
