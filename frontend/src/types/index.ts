@@ -8,12 +8,15 @@ export interface VerificationTier {
   iconName: string;
 }
 
+export type WalletType = 'LACE_DAPP_CONNECTOR' | 'STELLAR_FREIGHTER' | 'DEMO_WALLET';
+
 export interface WalletState {
   isConnected: boolean;
   address: string | null;
   network: string;
   balance: string;
-  connectorType: 'LACE_DAPP_CONNECTOR' | 'SIMULATOR';
+  walletName: string;
+  connectorType: WalletType;
 }
 
 export type ProverStep = 

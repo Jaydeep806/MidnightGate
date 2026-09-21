@@ -6,30 +6,45 @@ import { ProofGenerator } from './components/ProofGenerator';
 import { PrivacyInspector } from './components/PrivacyInspector';
 import { VerifiableCredentialCard } from './components/VerifiableCredentialCard';
 import { ContractStats } from './components/ContractStats';
+import { WalletModal } from './components/WalletModal';
 import { TIERS, midnightClient } from './midnight/midnightClient';
-import { laceConnector } from './midnight/laceConnector';
-import { IssuedCredential, ProverStep, VerificationTier, WalletState } from './types';
+import { walletService } from './midnight/laceConnector';
+import { IssuedCredential, ProverStep, VerificationTier, WalletState, WalletType } from './types';
 import { Github, Moon } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [wallet, setWallet] = useState<WalletState>({
     isConnected: false,
     address: null,
+    walletName: '',
     network: 'Midnight Preprod',
     balance: '0.00 tDUST',
-    connectorType: 'SIMULATOR'
+    connectorType: 'DEMO_WALLET'
   });
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState<boolean>(false);
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [selectedTier, setSelectedTier] = useState<VerificationTier>(TIERS[0]);
   const [proverStep, setProverStep] = useState<ProverStep>('IDLE');
   const [proverLog, setProverLog] = useState<string>('');
   const [issuedCredential, setIssuedCredential] = useState<IssuedCredential | null>(null);
 
-  const handleConnectWallet = async () => {
+  const handleOpenWalletModal = () => {
+    setIsWalletModalOpen(true);
+  };
+
+  const handleSelectWallet = async (type: WalletType) => {
     try {
       setIsConnecting(true);
-      const state = await laceConnector.connect();
+      let state: WalletState;
+      if (type === 'LACE_DAPP_CONNECTOR') {
+        state = await walletService.connectLace();
+      } else if (type === 'STELLAR_FREIGHTER') {
+        state = await walletService.connectFreighter();
+      } else {
+        state = await walletService.connectDemo();
+      }
       setWallet(state);
+      setIsWalletModalOpen(false);
     } catch (err) {
       console.error('Wallet connection error:', err);
     } finally {
@@ -38,7 +53,7 @@ export const App: React.FC = () => {
   };
 
   const handleDisconnectWallet = async () => {
-    const state = await laceConnector.disconnect();
+    const state = await walletService.disconnect();
     setWallet(state);
     setIssuedCredential(null);
     setProverStep('IDLE');
@@ -59,7 +74,6 @@ export const App: React.FC = () => {
       setIssuedCredential(credential);
     } catch (error: any) {
       console.error('Verification flow error:', error);
-      // step and log already updated in callback
     }
   };
 
@@ -67,7 +81,7 @@ export const App: React.FC = () => {
     <div className="min-h-screen flex flex-col font-sans bg-midnight-950 text-slate-100">
       <Navbar
         wallet={wallet}
-        onConnect={handleConnectWallet}
+        onOpenConnectModal={handleOpenWalletModal}
         onDisconnect={handleDisconnectWallet}
         isConnecting={isConnecting}
       />
@@ -104,13 +118,21 @@ export const App: React.FC = () => {
               proverStep={proverStep}
               proverLog={proverLog}
               onGenerateProof={handleGenerateProof}
-              onConnectWallet={handleConnectWallet}
+              onConnectWallet={handleOpenWalletModal}
             />
           )}
 
           <PrivacyInspector selectedTier={selectedTier} />
         </div>
       </main>
+
+      {/* Wallet Selection Modal */}
+      <WalletModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+        onSelectWallet={handleSelectWallet}
+        isConnecting={isConnecting}
+      />
 
       <footer className="border-t border-slate-900 bg-midnight-950/90 py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">

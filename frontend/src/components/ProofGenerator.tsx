@@ -119,10 +119,10 @@ export const ProofGenerator: React.FC<ProofGeneratorProps> = ({
             <button
               type="button"
               onClick={onConnectWallet}
-              className="w-full py-4 rounded-2xl font-bold text-base bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 text-white shadow-xl shadow-purple-950/60 hover:shadow-purple-700/40 hover:scale-[1.01] transition-all flex items-center justify-center space-x-2"
+              className="w-full py-4 rounded-2xl font-bold text-base bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 text-white shadow-xl shadow-purple-950/60 hover:shadow-purple-700/40 hover:scale-[1.01] transition-all flex items-center justify-center space-x-2 cursor-pointer"
             >
               <Cpu className="w-5 h-5" />
-              <span>Connect Lace Wallet on Midnight Preprod</span>
+              <span>Connect Wallet (Lace, Freighter, or Demo)</span>
             </button>
           ) : (
             <button

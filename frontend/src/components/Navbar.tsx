@@ -1,22 +1,44 @@
 import React from 'react';
 import { WalletState } from '../types';
-import { Shield, Wallet, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Shield, Wallet, CheckCircle2, ExternalLink, Rocket, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
   wallet: WalletState;
-  onConnect: () => void;
+  onOpenConnectModal: () => void;
   onDisconnect: () => void;
   isConnecting: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   wallet,
-  onConnect,
+  onOpenConnectModal,
   onDisconnect,
   isConnecting
 }) => {
+  const getWalletIcon = () => {
+    switch (wallet.connectorType) {
+      case 'STELLAR_FREIGHTER':
+        return <Rocket className="w-3.5 h-3.5 text-sky-400" />;
+      case 'DEMO_WALLET':
+        return <Sparkles className="w-3.5 h-3.5 text-emerald-400" />;
+      default:
+        return <Shield className="w-3.5 h-3.5 text-purple-400" />;
+    }
+  };
+
+  const getWalletBadgeClass = () => {
+    switch (wallet.connectorType) {
+      case 'STELLAR_FREIGHTER':
+        return 'text-sky-400 bg-sky-500/10 border-sky-500/20';
+      case 'DEMO_WALLET':
+        return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';
+      default:
+        return 'text-purple-300 bg-purple-500/10 border-purple-500/20';
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 border-b border-indigo-950/60 bg-midnight-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-indigo-950/60 bg-midnight-950/80 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo & Title */}
         <div className="flex items-center space-x-3">
@@ -61,31 +83,36 @@ export const Navbar: React.FC<NavbarProps> = ({
           {wallet.isConnected ? (
             <div className="flex items-center space-x-3">
               <div className="hidden md:flex flex-col items-end">
-                <span className="text-xs font-mono text-emerald-400 flex items-center space-x-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Lace Connected</span>
-                </span>
-                <span className="text-xs font-mono text-slate-400 truncate max-w-[140px]">
+                <div className="flex items-center space-x-1.5">
+                  <span className={`px-2 py-0.5 text-[10px] font-mono rounded-full border flex items-center space-x-1 ${getWalletBadgeClass()}`}>
+                    {getWalletIcon()}
+                    <span>{wallet.walletName || 'Connected'}</span>
+                  </span>
+                  <span className="text-xs font-mono text-emerald-400 flex items-center space-x-1">
+                    <CheckCircle2 className="w-3 h-3" />
+                  </span>
+                </div>
+                <span className="text-xs font-mono text-slate-400 truncate max-w-[150px] mt-0.5">
                   {wallet.address ? `${wallet.address.slice(0, 8)}...${wallet.address.slice(-6)}` : ''}
                 </span>
               </div>
               <button
                 onClick={onDisconnect}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/30 hover:bg-rose-500/20 transition-all shadow-sm"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/30 hover:bg-rose-500/20 transition-all shadow-sm cursor-pointer"
               >
                 Disconnect
               </button>
             </div>
           ) : (
             <button
-              onClick={onConnect}
+              onClick={onOpenConnectModal}
               disabled={isConnecting}
-              className="relative group px-5 py-2.5 rounded-xl font-medium text-sm text-white overflow-hidden transition-all shadow-lg shadow-purple-950/50 hover:shadow-purple-700/30"
+              className="relative group px-5 py-2.5 rounded-xl font-medium text-sm text-white overflow-hidden transition-all shadow-lg shadow-purple-950/50 hover:shadow-purple-700/30 cursor-pointer"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 group-hover:scale-105 transition-transform duration-300"></div>
               <div className="relative flex items-center space-x-2">
                 <Wallet className="w-4 h-4" />
-                <span>{isConnecting ? 'Connecting Lace...' : 'Connect Lace Wallet'}</span>
+                <span>{isConnecting ? 'Connecting...' : 'Connect Wallet'}</span>
               </div>
             </button>
           )}
