@@ -1,3 +1,5 @@
+export type NavigationPage = 'PROVER_GATEWAY' | 'PROTOCOL_VERIFIER' | 'CONTRACT_SPECS';
+
 export interface VerificationTier {
   id: string;
   name: string;
@@ -39,4 +41,24 @@ export interface IssuedCredential {
   contractAddress: string;
   verifierPublicKey: string;
   midnightProofDigest: string;
+  contextNonce: string;
+}
+
+export interface VerificationActivity {
+  id: string;
+  nullifier: string;
+  tierName: string;
+  thresholdUSD: number;
+  txHash: string;
+  blockHeight: number;
+  timestamp: string;
+  status: 'VERIFIED' | 'REVOKED';
+  network: string;
+}
+
+export interface ToastNotification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'success' | 'error' | 'info';
 }

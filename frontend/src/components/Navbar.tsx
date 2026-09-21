@@ -1,17 +1,23 @@
 import React from 'react';
-import { WalletState } from '../types';
-import { Shield, Wallet, CheckCircle2, ExternalLink, Rocket, Sparkles } from 'lucide-react';
+import { NavigationPage, WalletState } from '../types';
+import { Shield, Wallet, CheckCircle2, Rocket, Sparkles, Droplets, Lock, Search, FileCode } from 'lucide-react';
 
 interface NavbarProps {
+  activePage: NavigationPage;
+  onSelectPage: (page: NavigationPage) => void;
   wallet: WalletState;
   onOpenConnectModal: () => void;
+  onOpenFaucetModal: () => void;
   onDisconnect: () => void;
   isConnecting: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
+  activePage,
+  onSelectPage,
   wallet,
   onOpenConnectModal,
+  onOpenFaucetModal,
   onDisconnect,
   isConnecting
 }) => {
@@ -38,12 +44,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-indigo-950/60 bg-midnight-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-indigo-950/60 bg-midnight-950/85 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Logo & Title */}
-        <div className="flex items-center space-x-3">
+        {/* Logo & Brand */}
+        <div 
+          onClick={() => onSelectPage('PROVER_GATEWAY')}
+          className="flex items-center space-x-3 cursor-pointer group"
+        >
           <div className="relative">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-midnight-accent via-midnight-glow to-amber-400 p-0.5 shadow-lg shadow-purple-900/40">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-midnight-accent via-midnight-glow to-amber-400 p-0.5 shadow-lg shadow-purple-900/40 group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-midnight-950 rounded-[10px] flex items-center justify-center">
                 <Shield className="w-6 h-6 text-midnight-accent" />
               </div>
@@ -62,27 +71,63 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Preprod
               </span>
             </div>
-            <p className="text-xs text-slate-400">Zero-Knowledge Net Worth & Eligibility Protocol</p>
+            <p className="text-xs text-slate-400">Zero-Knowledge Net Worth Protocol</p>
           </div>
         </div>
 
-        {/* Navigation & Wallet Button */}
-        <div className="flex items-center space-x-4">
-          <a 
-            href="https://midnight.network" 
-            target="_blank" 
-            rel="noreferrer"
-            className="hidden sm:flex items-center space-x-1 text-xs text-slate-400 hover:text-purple-300 transition-colors font-mono"
+        {/* Navigation Page Tabs (Multi-page switcher) */}
+        <nav className="hidden md:flex items-center space-x-1 p-1.5 rounded-2xl bg-midnight-900/90 border border-slate-800">
+          <button
+            onClick={() => onSelectPage('PROVER_GATEWAY')}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold font-sans flex items-center space-x-2 transition-all cursor-pointer ${
+              activePage === 'PROVER_GATEWAY'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-900/50'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+            }`}
           >
-            <span>Midnight Docs</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
+            <Lock className="w-3.5 h-3.5" />
+            <span>ZK Prover Gateway</span>
+          </button>
 
-          <div className="h-6 w-px bg-slate-800 hidden sm:block"></div>
+          <button
+            onClick={() => onSelectPage('PROTOCOL_VERIFIER')}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold font-sans flex items-center space-x-2 transition-all cursor-pointer ${
+              activePage === 'PROTOCOL_VERIFIER'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-900/50'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            <Search className="w-3.5 h-3.5" />
+            <span>Protocol Verifier &amp; Feed</span>
+          </button>
+
+          <button
+            onClick={() => onSelectPage('CONTRACT_SPECS')}
+            className={`px-4 py-2 rounded-xl text-xs font-semibold font-sans flex items-center space-x-2 transition-all cursor-pointer ${
+              activePage === 'CONTRACT_SPECS'
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-900/50'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            <FileCode className="w-3.5 h-3.5" />
+            <span>Smart Contract &amp; Matrix</span>
+          </button>
+        </nav>
+
+        {/* Actions (Faucet & Wallet) */}
+        <div className="flex items-center space-x-3">
+          {/* Faucet Button */}
+          <button
+            onClick={onOpenFaucetModal}
+            className="hidden sm:flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-mono font-semibold bg-purple-950/40 border border-purple-500/30 text-purple-300 hover:bg-purple-900/50 hover:text-white transition-all cursor-pointer shadow-sm"
+          >
+            <Droplets className="w-3.5 h-3.5 text-amber-400" />
+            <span>Preprod Faucet</span>
+          </button>
 
           {wallet.isConnected ? (
             <div className="flex items-center space-x-3">
-              <div className="hidden md:flex flex-col items-end">
+              <div className="hidden lg:flex flex-col items-end">
                 <div className="flex items-center space-x-1.5">
                   <span className={`px-2 py-0.5 text-[10px] font-mono rounded-full border flex items-center space-x-1 ${getWalletBadgeClass()}`}>
                     {getWalletIcon()}
@@ -98,7 +143,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <button
                 onClick={onDisconnect}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/30 hover:bg-rose-500/20 transition-all shadow-sm cursor-pointer"
+                className="px-3.5 py-2 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/30 hover:bg-rose-500/20 transition-all shadow-sm cursor-pointer"
               >
                 Disconnect
               </button>
@@ -107,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenConnectModal}
               disabled={isConnecting}
-              className="relative group px-5 py-2.5 rounded-xl font-medium text-sm text-white overflow-hidden transition-all shadow-lg shadow-purple-950/50 hover:shadow-purple-700/30 cursor-pointer"
+              className="relative group px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm text-white overflow-hidden transition-all shadow-lg shadow-purple-950/50 hover:shadow-purple-700/30 cursor-pointer"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 group-hover:scale-105 transition-transform duration-300"></div>
               <div className="relative flex items-center space-x-2">
@@ -117,6 +162,39 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
         </div>
+      </div>
+
+      {/* Mobile Page Navigation Bar */}
+      <div className="flex md:hidden items-center justify-around border-t border-slate-800/80 px-2 py-2 bg-midnight-950">
+        <button
+          onClick={() => onSelectPage('PROVER_GATEWAY')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1 ${
+            activePage === 'PROVER_GATEWAY' ? 'bg-purple-600 text-white' : 'text-slate-400'
+          }`}
+        >
+          <Lock className="w-3 h-3" />
+          <span>ZK Gateway</span>
+        </button>
+
+        <button
+          onClick={() => onSelectPage('PROTOCOL_VERIFIER')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1 ${
+            activePage === 'PROTOCOL_VERIFIER' ? 'bg-purple-600 text-white' : 'text-slate-400'
+          }`}
+        >
+          <Search className="w-3 h-3" />
+          <span>Verifier</span>
+        </button>
+
+        <button
+          onClick={() => onSelectPage('CONTRACT_SPECS')}
+          className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1 ${
+            activePage === 'CONTRACT_SPECS' ? 'bg-purple-600 text-white' : 'text-slate-400'
+          }`}
+        >
+          <FileCode className="w-3 h-3" />
+          <span>Contract</span>
+        </button>
       </div>
     </header>
   );
