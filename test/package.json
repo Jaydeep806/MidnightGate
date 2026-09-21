@@ -1,0 +1,15 @@
+{
+  "name": "midnight-gate-tests",
+  "version": "1.0.0",
+  "description": "Automated test suite for MidnightGate Compact contract and ZK circuits",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
