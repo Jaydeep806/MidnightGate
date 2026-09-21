@@ -6,6 +6,9 @@ import { ProofGenerator } from './components/ProofGenerator';
 import { PrivacyInspector } from './components/PrivacyInspector';
 import { VerifiableCredentialCard } from './components/VerifiableCredentialCard';
 import { ContractStats } from './components/ContractStats';
+import { DeFiVaultDemo } from './components/DeFiVaultDemo';
+import { GateBuilder } from './components/GateBuilder';
+import { CircuitVisualizer } from './components/CircuitVisualizer';
 import { VerifierPortal } from './components/VerifierPortal';
 import { ContractExplorer } from './components/ContractExplorer';
 import { WalletModal } from './components/WalletModal';
@@ -14,7 +17,7 @@ import { ToastContainer } from './components/Toast';
 import { TIERS, midnightClient } from './midnight/midnightClient';
 import { walletService } from './midnight/laceConnector';
 import { IssuedCredential, NavigationPage, ProverStep, ToastNotification, VerificationTier, WalletState, WalletType } from './types';
-import { Github, Moon, Lock, Search, FileCode } from 'lucide-react';
+import { Github, Moon, Lock, Landmark, Settings, Cpu, Search, FileCode } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activePage, setActivePage] = useState<NavigationPage>('PROVER_GATEWAY');
@@ -104,7 +107,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-midnight-950 text-slate-100">
+    <div className="min-h-screen flex flex-col font-sans bg-midnight-950 text-slate-100 selection:bg-purple-600 selection:text-white">
       <Navbar
         activePage={activePage}
         onSelectPage={setActivePage}
@@ -116,7 +119,7 @@ export const App: React.FC = () => {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-        {/* PAGE 1: ZK PROVER GATEWAY (User / Investor View) */}
+        {/* VIEW 1: ZK PROVER GATEWAY (User / Investor View) */}
         {activePage === 'PROVER_GATEWAY' && (
           <div className="space-y-12 animate-fadeIn">
             <Hero />
@@ -136,13 +139,31 @@ export const App: React.FC = () => {
               />
 
               {issuedCredential ? (
-                <VerifiableCredentialCard
-                  credential={issuedCredential}
-                  onReset={() => {
-                    setIssuedCredential(null);
-                    setProverStep('IDLE');
-                  }}
-                />
+                <div className="space-y-4">
+                  <VerifiableCredentialCard
+                    credential={issuedCredential}
+                    onReset={() => {
+                      setIssuedCredential(null);
+                      setProverStep('IDLE');
+                    }}
+                  />
+                  
+                  {/* CTA to use the proof in DeFi Vault */}
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/80 to-teal-950/80 border border-emerald-500/40 flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <Landmark className="w-5 h-5 text-emerald-400" />
+                      <span className="text-xs text-slate-200">
+                        You have an active Accredited Investor credential. Ready to test private borrowing?
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setActivePage('DEFI_VAULT_DEMO')}
+                      className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all cursor-pointer"
+                    >
+                      Open DeFi Vault →
+                    </button>
+                  </div>
+                </div>
               ) : (
                 <ProofGenerator
                   wallet={wallet}
@@ -159,12 +180,33 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* PAGE 2: PROTOCOL VERIFIER & NULLIFIER REGISTRY (DeFi Protocol View) */}
+        {/* VIEW 2: DEFI LENDING VAULT DEMO (Cross-Protocol Application View) */}
+        {activePage === 'DEFI_VAULT_DEMO' && (
+          <DeFiVaultDemo
+            wallet={wallet}
+            activeCredential={issuedCredential}
+            onNavigateToProver={() => setActivePage('PROVER_GATEWAY')}
+            onOpenConnectModal={handleOpenWalletModal}
+            onShowToast={addToast}
+          />
+        )}
+
+        {/* VIEW 3: B2B CUSTOM GATE BUILDER (Protocol Creator View) */}
+        {activePage === 'GATE_BUILDER' && (
+          <GateBuilder />
+        )}
+
+        {/* VIEW 4: CIRCUIT & MATH VISUALIZER (Cryptographic Engine View) */}
+        {activePage === 'CIRCUIT_VISUALIZER' && (
+          <CircuitVisualizer />
+        )}
+
+        {/* VIEW 5: PROTOCOL VERIFIER & NULLIFIER REGISTRY (DeFi Explorer View) */}
         {activePage === 'PROTOCOL_VERIFIER' && (
           <VerifierPortal />
         )}
 
-        {/* PAGE 3: SMART CONTRACT & MATRIX (Developer / Judge View) */}
+        {/* VIEW 6: SMART CONTRACT SPECS & GRADING MATRIX (Judge View) */}
         {activePage === 'CONTRACT_SPECS' && (
           <ContractExplorer />
         )}
@@ -193,14 +235,14 @@ export const App: React.FC = () => {
       />
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-midnight-950/90 py-8 mt-16">
+      <footer className="border-t border-slate-900 bg-midnight-950/95 py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center space-x-3">
             <Moon className="w-4 h-4 text-purple-400" />
             <span>Built for Rise In Moonshots on Midnight • Levels 1, 2, 3</span>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-3 font-sans text-[11px]">
             <button
               onClick={() => setActivePage('PROVER_GATEWAY')}
               className={`hover:text-white transition-colors flex items-center space-x-1 ${
@@ -208,7 +250,37 @@ export const App: React.FC = () => {
               }`}
             >
               <Lock className="w-3 h-3" />
-              <span>ZK Gateway</span>
+              <span>ZK Prover</span>
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => setActivePage('DEFI_VAULT_DEMO')}
+              className={`hover:text-white transition-colors flex items-center space-x-1 ${
+                activePage === 'DEFI_VAULT_DEMO' ? 'text-emerald-300 font-bold' : ''
+              }`}
+            >
+              <Landmark className="w-3 h-3" />
+              <span>DeFi Vault</span>
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => setActivePage('GATE_BUILDER')}
+              className={`hover:text-white transition-colors flex items-center space-x-1 ${
+                activePage === 'GATE_BUILDER' ? 'text-amber-300 font-bold' : ''
+              }`}
+            >
+              <Settings className="w-3 h-3" />
+              <span>Gate Builder</span>
+            </button>
+            <span>•</span>
+            <button
+              onClick={() => setActivePage('CIRCUIT_VISUALIZER')}
+              className={`hover:text-white transition-colors flex items-center space-x-1 ${
+                activePage === 'CIRCUIT_VISUALIZER' ? 'text-indigo-300 font-bold' : ''
+              }`}
+            >
+              <Cpu className="w-3 h-3" />
+              <span>Circuit Math</span>
             </button>
             <span>•</span>
             <button
@@ -218,7 +290,7 @@ export const App: React.FC = () => {
               }`}
             >
               <Search className="w-3 h-3" />
-              <span>Verifier &amp; Feed</span>
+              <span>Verifier</span>
             </button>
             <span>•</span>
             <button
@@ -228,7 +300,7 @@ export const App: React.FC = () => {
               }`}
             >
               <FileCode className="w-3 h-3" />
-              <span>Smart Contract</span>
+              <span>Matrix</span>
             </button>
           </div>
 
