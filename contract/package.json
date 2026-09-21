@@ -1,0 +1,14 @@
+{
+  "name": "midnight-gate-contract",
+  "version": "1.0.0",
+  "description": "Compact smart contract and circuits for MidnightGate ZK verification",
+  "main": "dist/index.js",
+  "scripts": {
+    "compile": "compact compile src/gate.compact --out-dir src/managed",
+    "build": "tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
