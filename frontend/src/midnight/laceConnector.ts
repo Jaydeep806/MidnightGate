@@ -1,3 +1,4 @@
+import { isConnected as isFreighterConnected, requestAccess, getAddress, getNetwork } from '@stellar/freighter-api';
 import { WalletState } from '../types';
 
 export class WalletService {
@@ -13,106 +14,146 @@ export class WalletService {
   }
 
   /**
-   * Check if Lace Midnight DApp Connector is injected in browser
+   * Check if Lace Midnight / Cardano DApp Connector is injected in browser
    */
-  public hasLaceExtension(): boolean {
-    return typeof window !== 'undefined' && (
-      Boolean((window as any).midnight?.mnLace) || 
-      Boolean((window as any).cardano?.lace)
+  public async hasLaceExtension(): Promise<boolean> {
+    if (typeof window === 'undefined') return false;
+    return Boolean(
+      (window as any).midnight?.mnLace || 
+      (window as any).cardano?.lace
     );
   }
 
   /**
-   * Check if Stellar Freighter wallet extension is injected in browser
+   * Check if Stellar Freighter wallet extension is installed
    */
-  public hasFreighterExtension(): boolean {
-    return typeof window !== 'undefined' && Boolean((window as any).freighter);
+  public async hasFreighterExtension(): Promise<boolean> {
+    if (typeof window === 'undefined') return false;
+    try {
+      const res = await isFreighterConnected();
+      return Boolean(res && (res as any).isConnected !== false);
+    } catch {
+      return Boolean((window as any).freighter);
+    }
   }
 
   /**
-   * Connect to Lace Wallet on Midnight Preprod
+   * Connect to REAL Lace Wallet on Midnight Preprod
    */
   public async connectLace(): Promise<WalletState> {
-    if (this.hasLaceExtension()) {
-      try {
-        const midnightLace = (window as any).midnight?.mnLace;
-        if (midnightLace && typeof midnightLace.enable === 'function') {
-          const api = await midnightLace.enable();
-          const addresses = await api.getUsedAddresses?.();
-          const address = addresses?.[0] || 'midnight1addr_preprod_lace_user_7894';
-          return {
-            isConnected: true,
-            address,
-            walletName: 'Lace Wallet',
-            network: 'Midnight Preprod (Testnet)',
-            balance: '1,450.00 tDUST',
-            connectorType: 'LACE_DAPP_CONNECTOR'
-          };
-        }
-      } catch (err) {
-        console.warn('Lace native connector prompt closed or fallback needed:', err);
-      }
+    const isLacePresent = await this.hasLaceExtension();
+
+    if (!isLacePresent) {
+      throw new Error(
+        'LACE_NOT_INSTALLED: Lace Wallet extension was not detected in your browser. Please install Lace from the Chrome Web Store, or use the Quick Demo Wallet.'
+      );
     }
 
-    // Interactive Preprod simulation
-    await new Promise(res => setTimeout(res, 500));
-    return {
-      isConnected: true,
-      address: 'mn_preprod1q9x7y9k4w2d8j3v6f7h8s0a1b2c3d4e5f6g7h8',
-      walletName: 'Lace Wallet',
-      network: 'Midnight Preprod (Chain ID: 420)',
-      balance: '2,850.50 tDUST',
-      connectorType: 'LACE_DAPP_CONNECTOR'
-    };
+    try {
+      // 1. Try Midnight specific Lace connector
+      if ((window as any).midnight?.mnLace) {
+        const midnightApi = await (window as any).midnight.mnLace.enable();
+        const addresses = await midnightApi.getUsedAddresses?.();
+        const address = addresses?.[0] || 'midnight1addr_preprod_lace_user';
+        
+        return {
+          isConnected: true,
+          address,
+          walletName: 'Lace (Midnight Preprod)',
+          network: 'Midnight Preprod Testnet',
+          balance: 'Active tDUST Account',
+          connectorType: 'LACE_DAPP_CONNECTOR'
+        };
+      }
+
+      // 2. Try standard Lace connector
+      if ((window as any).cardano?.lace) {
+        const api = await (window as any).cardano.lace.enable();
+        const usedAddresses = await api.getUsedAddresses?.();
+        const rawAddr = usedAddresses?.[0] || 'lace_wallet_connected';
+
+        return {
+          isConnected: true,
+          address: rawAddr,
+          walletName: 'Lace Wallet',
+          network: 'Midnight Preprod (Cardano/Midnight Bridge)',
+          balance: 'Active Lace Account',
+          connectorType: 'LACE_DAPP_CONNECTOR'
+        };
+      }
+
+      throw new Error('Unable to initialize Lace DApp connector.');
+    } catch (err: any) {
+      if (err?.message?.includes('declined') || err?.message?.includes('cancel') || err?.code === -1) {
+        throw new Error('Connection request was declined in Lace Wallet.');
+      }
+      throw new Error(err?.message || 'Failed to connect with Lace Wallet.');
+    }
   }
 
   /**
-   * Connect to Stellar Freighter Wallet (Cross-chain ZK Identity)
+   * Connect to REAL Stellar Freighter Wallet via official @stellar/freighter-api
    */
   public async connectFreighter(): Promise<WalletState> {
-    if (this.hasFreighterExtension()) {
-      try {
-        const freighter = (window as any).freighter;
-        if (freighter) {
-          const isConnected = await freighter.isConnected();
-          if (isConnected) {
-            const publicKey = await freighter.getPublicKey();
-            return {
-              isConnected: true,
-              address: publicKey || 'GDQP2KPQGKIHYJGXNUIYOMHARUARCA7DJT5FO2FFOOKY3B2WSQHG4W37',
-              walletName: 'Stellar Freighter',
-              network: 'Stellar Testnet ➔ Midnight Preprod',
-              balance: '1,000.00 XLM / 500 tDUST',
-              connectorType: 'STELLAR_FREIGHTER'
-            };
-          }
-        }
-      } catch (err) {
-        console.warn('Freighter native prompt closed or fallback needed:', err);
-      }
+    const isInstalled = await this.hasFreighterExtension();
+
+    if (!isInstalled) {
+      throw new Error(
+        'FREIGHTER_NOT_INSTALLED: Stellar Freighter extension was not detected in your browser. Please install Freighter from freighter.app, or use the Quick Demo Wallet.'
+      );
     }
 
-    // Freighter Cross-chain simulation
-    await new Promise(res => setTimeout(res, 500));
-    return {
-      isConnected: true,
-      address: 'GDQP2KPQGKIHYJGXNUIYOMHARUARCA7DJT5FO2FFOOKY3B2WSQHG4W37',
-      walletName: 'Stellar Freighter',
-      network: 'Stellar Testnet ➔ Midnight Bridge',
-      balance: '2,500.00 XLM (Pre-funded)',
-      connectorType: 'STELLAR_FREIGHTER'
-    };
+    try {
+      // Triggers the real Freighter browser pop-up authorization!
+      const accessObj = await requestAccess();
+      
+      let publicKey = '';
+      if (typeof accessObj === 'string') {
+        publicKey = accessObj;
+      } else if (accessObj && (accessObj as any).address) {
+        publicKey = (accessObj as any).address;
+      } else {
+        const addrObj = await getAddress();
+        publicKey = typeof addrObj === 'string' ? addrObj : (addrObj as any)?.address || '';
+      }
+
+      if (!publicKey) {
+        throw new Error('Could not retrieve public key from Freighter.');
+      }
+
+      let networkName = 'Stellar Testnet';
+      try {
+        const net = await getNetwork();
+        networkName = typeof net === 'string' ? net : (net as any)?.network || 'Stellar Testnet';
+      } catch {
+        // Default to Stellar Testnet
+      }
+
+      return {
+        isConnected: true,
+        address: publicKey,
+        walletName: 'Stellar Freighter',
+        network: `${networkName} ➔ Midnight Bridge`,
+        balance: 'Active Stellar Account',
+        connectorType: 'STELLAR_FREIGHTER'
+      };
+    } catch (err: any) {
+      if (err?.message?.includes('User declined') || err?.message?.includes('rejected') || err?.message?.includes('User rejected')) {
+        throw new Error('Connection request was cancelled in Freighter Wallet.');
+      }
+      throw new Error(err?.message || 'Failed to connect to Stellar Freighter wallet.');
+    }
   }
 
   /**
-   * Connect to instant Demo Testnet Wallet (1-click for judges & evaluators)
+   * Connect to instant Demo Testnet Sandbox Wallet
    */
   public async connectDemo(): Promise<WalletState> {
-    await new Promise(res => setTimeout(res, 300));
+    await new Promise(res => setTimeout(res, 350));
     return {
       isConnected: true,
       address: 'mn_demo1z8x9y0k1w2d3j4v5f6h7s8a9b0c1d2e3f4g5h6',
-      walletName: 'Quick Demo Wallet',
+      walletName: 'Quick Demo Sandbox',
       network: 'Midnight Preprod Sandbox',
       balance: '5,000.00 tDUST (Pre-funded)',
       connectorType: 'DEMO_WALLET'
@@ -132,4 +173,4 @@ export class WalletService {
 }
 
 export const walletService = WalletService.getInstance();
-export const laceConnector = walletService; // Backwards compatibility
+export const laceConnector = walletService;
