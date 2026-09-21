@@ -1,0 +1,25 @@
+{
+  "name": "midnight-gate",
+  "version": "1.0.0",
+  "description": "ZK Net Worth & Accredited Investor Verification Protocol built on Midnight Network",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix test run test",
+    "test:coverage": "npm --prefix test run test:coverage",
+    "lint": "npm --prefix frontend run lint"
+  },
+  "keywords": [
+    "midnight-network",
+    "zero-knowledge",
+    "zk-snarks",
+    "compact",
+    "risein",
+    "lace-wallet",
+    "preprod",
+    "privacy"
+  ],
+  "author": "Jaydeep",
+  "license": "MIT"
+}
