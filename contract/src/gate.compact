@@ -1,0 +1,82 @@
+// ==============================================================================
+// MidnightGate: Zero-Knowledge Net Worth & Accredited Investor Verification
+// Track: Midnight Request for Startups (Finance & Regulatory Compliance)
+// Language: Compact (Midnight Smart Contract Language)
+// ==============================================================================
+
+pragma language_version >= 0.20.0;
+
+// -----------------------------------------------------------------------------
+// Public Ledger State
+// Stored on-chain on Midnight Network (Preprod / Mainnet)
+// Visible to all network observers & smart contracts
+// -----------------------------------------------------------------------------
+export ledger state: {
+    // Set of nullifier hashes to ensure each credential/context is unique
+    // and prevent replay / double-registration attacks
+    verified_nullifiers: Set<Bytes<32>>,
+    
+    // Total count of verified investors registered through this gate
+    total_verified_investors: Uint<64>,
+    
+    // Default system threshold in USD units (e.g. 100,000 for Accredited Investor)
+    default_threshold_usd: Uint<64>,
+    
+    // Authorized gate authority / deployer identifier
+    authority_id: Bytes<32>
+};
+
+// -----------------------------------------------------------------------------
+// Private Witnesses
+// Stored STRICTLY on the user's local machine / wallet.
+// NEVER transmitted across the network or revealed to ledger observers.
+// -----------------------------------------------------------------------------
+witness user_asset_value(): Uint<64>;
+witness user_secret_salt(): Bytes<32>;
+
+// -----------------------------------------------------------------------------
+// Zero-Knowledge Proving Circuit: verify_and_register_credential
+// Generates a zk-SNARK proving: (user_asset_value >= required_threshold)
+// Updates public ledger state WITHOUT revealing user_asset_value!
+// -----------------------------------------------------------------------------
+export circuit verify_and_register_credential(
+    required_threshold: Uint<64>,
+    context_nonce: Bytes<32>
+): Bytes<32> {
+    // 1. Ingest private witnesses from local storage
+    const asset_value = user_asset_value();
+    const secret_salt = user_salt_secret();
+
+    // 2. Zero-Knowledge Threshold Invariant Check
+    // Constraint: Asset value must meet or exceed the required threshold
+    assert(
+        asset_value >= required_threshold, 
+        "MidnightGate: Private asset value does not satisfy required threshold"
+    );
+
+    // 3. Cryptographic Nullifier Derivation
+    // nullifier = hash(secret_salt, context_nonce)
+    // Guarantees uniqueness per user per application context without exposing salt
+    const nullifier = hash(secret_salt, context_nonce);
+
+    // 4. Assert anti-replay protection (Nullifier must not exist on ledger)
+    assert(
+        !ledger.verified_nullifiers.member(nullifier), 
+        "MidnightGate: Credential nullifier already registered on-chain"
+    );
+
+    // 5. Atomic Public State Transition
+    ledger.verified_nullifiers.insert(nullifier);
+    ledger.total_verified_investors = ledger.total_verified_investors + 1;
+
+    return nullifier;
+}
+
+// -----------------------------------------------------------------------------
+// Governance / Administration Circuit
+// Allows updating default threshold for future protocol integrations
+// -----------------------------------------------------------------------------
+export circuit update_default_threshold(new_threshold: Uint<64>): [] {
+    assert(new_threshold > 0, "MidnightGate: Threshold must be greater than zero");
+    ledger.default_threshold_usd = new_threshold;
+}
