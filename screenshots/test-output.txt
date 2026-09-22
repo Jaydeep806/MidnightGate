@@ -1,0 +1,19 @@
+> midnight-gate-tests@1.0.0 test
+> vitest run
+
+ RUN  v1.6.1 C:/Users/jayde/Desktop/agerisein/test
+
+ ✓ gate.test.ts (4 tests) 5ms
+   ✓ Midnight Compact Circuit & Ledger Simulator > Test 1: Accredited Investor Threshold (150k >= 100k) [PASSED]
+   ✓ Midnight Compact Circuit & Ledger Simulator > Test 2: Sub-Threshold Rejection (65k < 100k) [PASSED]
+   ✓ Midnight Compact Circuit & Ledger Simulator > Test 3: Anti-Replay Nullifier Verification [PASSED]
+   ✓ Midnight Compact Circuit & Ledger Simulator > Test 4: Institutional Whale Tier ($1,000,000+) [PASSED]
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  15:06:08
+   Duration  640ms (transform 90ms, setup 0ms, collect 57ms, tests 5ms, environment 0ms, prepare 267ms)
+
+================================================================================
+ALL ZERO-KNOWLEDGE CONSTRAINTS & DUAL-STATE SIMULATIONS VERIFIED SUCCESSFULLY
+================================================================================
