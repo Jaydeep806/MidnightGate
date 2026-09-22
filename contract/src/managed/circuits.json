@@ -1,0 +1,31 @@
+{
+  "compiler": "compactc",
+  "version": "0.20.4",
+  "target": "midnight-preprod",
+  "contract": "MidnightGate",
+  "source": "contract/src/gate.compact",
+  "circuits": [
+    {
+      "name": "verify_and_register_credential",
+      "visibility": "public",
+      "witnesses": ["user_asset_value", "user_secret_salt"],
+      "public_inputs": ["required_threshold", "context_nonce"],
+      "constraints": 1420,
+      "description": "Verifies that private asset value >= threshold and asserts nullifier uniqueness."
+    },
+    {
+      "name": "update_default_threshold",
+      "visibility": "public",
+      "witnesses": [],
+      "public_inputs": ["new_threshold"],
+      "constraints": 240,
+      "description": "Admin circuit allowing authorized threshold reconfiguration."
+    }
+  ],
+  "ledger_state": {
+    "verified_nullifiers": "Set<Bytes[32]>",
+    "total_verified_investors": "Counter",
+    "default_threshold_usd": "Uint<64>",
+    "authority_id": "Bytes[32]"
+  }
+}
