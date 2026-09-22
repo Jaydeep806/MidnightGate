@@ -32,6 +32,8 @@
 | **10. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
 | **11. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
 | **12. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
+| **13. Pitch Deck Presentation (.pptx)** | [`MidnightGate_Presentation.pptx`](./MidnightGate_Presentation.pptx) | ✅ Downloadable PPTX |
+| **14. Pitch Deck Document (.pdf)** | [`MidnightGate_PitchDeck.pdf`](./MidnightGate_PitchDeck.pdf) | ✅ Downloadable PDF |
 
 ---
 
