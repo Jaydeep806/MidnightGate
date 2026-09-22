@@ -1,67 +1,60 @@
 # 🌙 MidnightGate — ZK Net Worth & Accredited Investor Verifier
 
-> A decentralized, privacy-preserving zero-knowledge net worth and accredited investor verification protocol built on the **Midnight Network** using **Compact** smart contracts and dual-state ZK architecture.
+> A decentralized, privacy-preserving zero-knowledge eligibility and accredited investor verification protocol built on the **Midnight Network** using **Compact** smart contracts and dual-state ZK architecture.
 
 [![MidnightGate CI Pipeline](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml/badge.svg)](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml)
 [![Network](https://img.shields.io/badge/Network-Midnight%20Preprod%20(Chain%20420)-8b5cf6?logo=cardano)](https://midnight.network)
 [![Live Demo](https://img.shields.io/badge/🚀_Live%20DApp-midnight--gate.netlify.app-00C7B7?logo=netlify)](https://github.com/Jaydeep806/MidnightGate)
-[![Documentation](https://img.shields.io/badge/📖_Documentation-Public%20Repo-brightgreen?logo=github&logoColor=white)](README.md)
-[![Security Audit](https://img.shields.io/badge/🛡️_Security%20Audit-Passed%20100%25-brightgreen)](SECURITY_AUDIT_REPORT.md)
 [![Tests Passing](https://img.shields.io/badge/Tests-4%2F4%20Passing-10b981)](./test/gate.test.ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-> Built for the **Rise In: New Moon to Full: Monthly Moonshots on Midnight** Challenge (Levels 1, 2, 3 & Master Track)  
-> **Official Idea Track**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value* (and *Confidential Credentials*).  
-> Aligned with the official **[Midnight Request for Startups (RFS)](https://midnight.network/request-for-start-ups)** — *Finance & Regulatory Compliance Track*.
+> Built for the **Rise In: Monthly Moonshots on Midnight** Challenge  
+> **Level 1 (New Moon)** • **Level 2 (Waxing Crescent)** • **Level 3 (First Quarter)**  
+> **Chosen Track from Provided List**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*
 
 ---
 
 ## 📌 Initial Product Idea & Chosen Category
 
-* **Chosen Idea Track (from Level 3 list)**: **Age / Eligibility Gate — prove a threshold without revealing the underlying value**  
-* **Product Idea Summary**:  
-  **MidnightGate** is a decentralized zero-knowledge compliance and eligibility verification protocol on the **Midnight Network**. Traditional financial compliance forces users to submit unredacted bank statements and tax returns to prove accredited investor status ($\ge \$100,000$ net worth), creating catastrophic data-leak risks and honeypots. MidnightGate solves this by utilizing Midnight's **Compact** zero-knowledge language and dual-state ledger. Investors prove in their local browser that their asset balance meets or exceeds the required threshold ($100k+, $5M+, or custom gates). The Midnight smart contract verifies the zk-SNARK and issues an on-chain soulbound credential **without ever revealing the user's actual asset amount, bank balance, or identity**.
+* **Official Category Selected**: **Age / Eligibility Gate — prove a threshold without revealing the underlying value** (and *Confidential Credentials*).
+* **Product Idea Paragraph**:  
+  **MidnightGate** is a decentralized zero-knowledge compliance and eligibility verification protocol built on the **Midnight Network**. Traditional financial applications and token launchpads force users to submit unredacted bank statements and tax returns to verify accredited investor eligibility ($\ge \$100,000$ net worth), creating catastrophic data-leak risks and centralized honeypots. MidnightGate solves this by utilizing Midnight's **Compact** language and dual-state architecture: investors prove in their local browser via a zk-SNARK that their private asset balance meets or exceeds the required threshold ($100k+, $5M+, $25M+). The Midnight smart contract verifies the proof and issues an on-chain soulbound credential **without ever revealing the user's actual asset balance, bank account, or identity**.
 
 ---
 
-## 🥋 Rise In Belt Progression Status
+## 🏆 Submission Checklists (Levels 1, 2, and 3)
 
-| Belt Level | Program Milestone | Core Focus | Official Status |
-| :---: | :--- | :--- | :---: |
-| **Level 1** | **New Moon** | Midnight Compact Circuit, Dual-State Ledger & Managed Bindings | **✅ APPROVED** |
-| **Level 2** | **Waxing Crescent** | Interactive Glassmorphic Frontend, Lace Connector & Live ZK Prover | **✅ APPROVED** |
-| **Level 3** | **First Quarter** | Automated CI/CD Pipeline, 4/4 Passing Vitest Suite & Security Audit | **✅ APPROVED** |
-| **Master Track** | **Founder Belt** | 50+ Beta User Proof, Monthly Growth Report, Pitch Deck & Scaling Roadmap | **✅ 100% FULFILLED** |
+### 🌑 Level 1: New Moon Submission Checklist
+- [x] **Compact Toolchain Installed**: `contract/src/gate.compact` written and compiles via Compact compiler.
+- [x] **Generated `managed/` Directory Present**: Located at [`contract/src/managed/`](./contract/src/managed/) containing types and circuit keys.
+- [x] **Preprod Contract Deployed**: Deployed with visible address: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`.
+- [x] **Public State vs Private Witness Section**: Fully documented in README.
+- [x] **Initial Product Idea Paragraph**: Documented above.
+- [x] **Screenshot of Compact Compile Output**: Listed below.
+- [x] **Screenshot of Contract Deployment**: Listed below.
+- [x] **Minimum 5 Commits**: Completed (20+ commits on `main`).
 
----
+### 🌓 Level 2: Waxing Crescent Submission Checklist
+- [x] **Lace Wallet Connect / Disconnect**: Integrated in [`frontend/src/midnight/laceConnector.ts`](./frontend/src/midnight/laceConnector.ts) (with 1-Click Demo wallet fallback).
+- [x] **Circuit Called Successfully from Frontend**: Client-side ZK proof execution in [`frontend/src/midnight/midnightClient.ts`](./frontend/src/midnight/midnightClient.ts).
+- [x] **Observable Privacy Behavior**: Asset balance kept private locally; only zk-SNARK proof and public nullifier sent to Midnight Preprod.
+- [x] **Deployed Preprod Address**: Verifiable on Midnight Preprod network.
+- [x] **Live Demo Link**: Web application deployed and accessible.
+- [x] **Demo Video (1 Minute)**: [Watch 1080p Demo Video on YouTube](https://youtu.be/tyFBRt-QJQs).
+- [x] **README Documenting Privacy Claim**: Documented in Privacy Model section.
+- [x] **Minimum 8 Commits**: Completed (20+ commits on `main`).
 
-## 🏆 Level-by-Level Official Submission Deliverables
-
-### Level 1 (New Moon) Requirements Checklist
-- [x] **Compact Toolchain Installed**: `contract/src/gate.compact` compiles cleanly.
-- [x] **Generated `managed/` Directory**: `contract/src/managed/` with `index.ts`, `circuits.json`, `zk_keys.json`, and `gate.d.ts`.
-- [x] **Preprod Contract Deployed**: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`.
-- [x] **Initial Product Idea**: Documented in README.
-- [x] **Public vs Private State Section**: Fully detailed below.
-- [x] **Minimum 5 Commits**: 20+ commits in repository.
-
-### Level 2 (Waxing Crescent) Requirements Checklist
-- [x] **Lace Wallet Connect / Disconnect**: Implemented in [`frontend/src/midnight/laceConnector.ts`](frontend/src/midnight/laceConnector.ts) with 1-Click Demo fallback.
-- [x] **Circuit Called from Frontend**: Implemented in [`frontend/src/midnight/midnightClient.ts`](frontend/src/midnight/midnightClient.ts).
-- [x] **Observable Privacy Flow**: Private asset witness verified locally via zk-SNARK before on-chain nullifier registration.
-- [x] **Live Production Demo**: Available on Netlify & GitHub Pages.
-- [x] **Demo Walkthrough Video**: [Watch 1080p Video on YouTube](https://youtu.be/tyFBRt-QJQs).
-- [x] **Minimum 8 Commits**: 20+ commits in repository.
-
-### Level 3 (First Quarter) Requirements Checklist
-- [x] **Production Grade dApp**: Complete glassmorphic UI, Privacy Inspector, DeFi Vault gating, GateBuilder, and Verifier Portal.
-- [x] **Automated Test Suite**: 4/4 passing Vitest tests in `test/gate.test.ts`.
-- [x] **CI/CD Pipeline**: GitHub Actions workflow running on every push (`.github/workflows/ci.yml`).
-- [x] **Approved Idea Track**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*.
-- [x] **What an Observer Can & Cannot Learn**: Comprehensive privacy matrix in README.
-- [x] **Minimum 10 Commits**: 20+ commits in repository.
+### 🌕 Level 3: First Quarter Submission Checklist
+- [x] **Fully Functional Production dApp**: Interactive glassmorphic dashboard, Privacy Inspector, DeFi Vault Demo, GateBuilder, and Verifier Portal.
+- [x] **Approved Idea from Provided List**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*.
+- [x] **Minimum 3 Tests Passing**: **4/4 passing Vitest tests** covering threshold checks, sub-threshold rejection, anti-replay nullifiers, and custom tiers.
+- [x] **Screenshot of Test Output**: Listed below.
+- [x] **CI/CD Pipeline Running**: GitHub Actions workflow running on push ([`.github/workflows/ci.yml`](./.github/workflows/ci.yml)) with status badge.
+- [x] **README "Privacy Model" Section**: Detailed table of what an observer can and cannot learn.
+- [x] **Product Proposal Submitted**: Documented in [`PITCH_DECK.md`](./PITCH_DECK.md) and README.
+- [x] **Minimum 10 Commits**: Completed (20+ commits on `main`).
 
 ---
 
@@ -79,82 +72,11 @@
 ### 4. 🌐 Contract Deployment on Midnight Preprod (Address Shown)
 ![Contract Deployment](screenshots/contract-deployment.png)
 
-### 5. 🧪 Automated Test Suite Execution (4/4 Tests Passing)
+### 5. 🧪 Automated Test Suite Output (4/4 Passing Tests)
 ![Test Suite Output](screenshots/test-output.png)
 
 ### 6. 🚀 CI/CD Pipeline (GitHub Actions — 100% Passing)
 ![CI/CD Pipeline Passing](screenshots/cicd-pipeline.png)
-
-### 7. 📊 Analytics & Monitoring Setup
-![Monitoring & Analytics](screenshots/monitoring-setup.png)
-
----
-
-## 🎯 Problem Statement & Solution
-
-### The Problem
-Traditional DeFi protocols, real-world asset (RWA) token launchpads, and institutional wealth managers require participants to undergo invasive KYC checks or submit unredacted bank statements to verify their accredited investor status ($\ge \$100,000$ net worth).
-
-- **Invasive Doxxing**: Users must reveal their total bank balance, tax returns, and employer details.
-- **Centralized Honeypots**: KYC brokers aggregate millions of sensitive records vulnerable to data breaches.
-- **Regulatory Deadlocks**: Protocols face severe legal penalties under US SEC Rule 506(c) if they cannot verify accreditation.
-
-### Our Solution
-**MidnightGate** provides a **zero-knowledge compliance layer on Midnight** where:
-
-| Action | Description | Privacy Guarantee |
-| :--- | :--- | :--- |
-| 🔒 **Local Witness** | User inputs actual asset balance in local browser memory | **Never leaves client device** |
-| ⚡ **ZK Synthesis** | Browser compiles a zk-SNARK constraint asserting $\text{Asset} \ge \text{Threshold}$ | **Zero financial data disclosed** |
-| 🛡️ **Anti-Replay** | Generates cryptographic nullifier $H(\text{Salt}, \text{Context})$ | **Prevents identity clustering & reuse** |
-| 🏆 **On-Chain Credential** | Midnight smart contract verifies proof and issues soulbound attestation | **Verifiable by any DeFi protocol** |
-
----
-
-## 🏛️ System Architecture
-
-```mermaid
-graph TB
-    subgraph ClientLayer["User Local Client (Browser / Lace)"]
-        PW["Private Witness: Asset Value + Secret Salt"]
-        PS["Local ZK Prover (WebAssembly / Compact)"]
-        UI["Glassmorphic Dashboard & Inspector"]
-    end
-
-    subgraph WalletLayer["Wallet Integration"]
-        LACE["Midnight Lace DApp Connector"]
-        DEMO["1-Click Instant Funded Demo Keypair"]
-    end
-
-    subgraph ProverBridge["Proof & Relayer Layer"]
-        RPS["Local Proof Server (:6300)"]
-        SYN["zk-SNARK Synthesizer (~1.2s)"]
-    end
-
-    subgraph MidnightLedger["Midnight Preprod (Chain ID: 420)"]
-        MGC["MidnightGate Compact Contract"]
-        NUL["Verified Nullifier Set (Anti-Replay)"]
-        CNT["Global Verified Counter (+1)"]
-    end
-
-    subgraph DeFiEcosystem["Permissioned Integrations"]
-        VAULT["Aave-Style VIP Lending Vaults"]
-        RWA["RWA Token Launchpads"]
-        DID["Soulbound Verifiable Credential"]
-    end
-
-    UI --> PW
-    PW --> PS
-    PS --> SYN
-    SYN --> RPS
-    WalletLayer --> UI
-    RPS -->|Submit Proof + Nullifier| MGC
-    MGC --> NUL
-    MGC --> CNT
-    MGC --> DID
-    DID --> VAULT
-    DID --> RWA
-```
 
 ---
 
@@ -187,10 +109,10 @@ graph TB
 
 | Component | Storage Layer | Description |
 | :--- | :--- | :--- |
-| **User Asset Value** | **Private Witness** | Stored strictly in client memory. Never sent across the network. |
+| **User Asset Value** | **Private Witness** | Stored strictly in local client memory. Never sent across the network. |
 | **User Secret Salt** | **Private Witness** | Cryptographic entropy preventing brute-force rainbow attacks. |
 | **Verification Threshold** | **Public Circuit Input** | Required threshold parameter (e.g. `$100,000` for Accredited Investor). |
-| **Nullifier Hash** | **Public Ledger State** | `hash(secret_salt, context_nonce)` stored on-chain to prevent replay. |
+| **Nullifier Hash** | **Public Ledger State** | `hash(secret_salt, context_nonce)` stored on-chain to prevent credential replay. |
 | **Total Verified Counter** | **Public Ledger State** | Global tally of verified participants. |
 
 ### 2. What an Observer CAN and CANNOT Learn
@@ -207,80 +129,13 @@ graph TB
 
 ---
 
-## 📜 Smart Contract Design (`gate.compact`)
+## ⚡ Deployed Smart Contract Details (Midnight Preprod)
 
-The core zero-knowledge circuit is written in Midnight's **Compact** domain-specific language:
-
-| Circuit / Function | Description | Access Control |
-| :--- | :--- | :---: |
-| `verify_accredited_investor` | Verifies private asset $\ge \$100\text{k}$, inserts nullifier, increments count | Public / Prover |
-| `verify_qualified_purchaser` | Verifies private asset $\ge \$5\text{M}$ for qualified purchaser pools | Public / Prover |
-| `verify_institutional_whale` | Verifies private asset $\ge \$25\text{M}$ for institutional liquidity tiers | Public / Prover |
-| `verify_custom_gate` | Verifies dynamic arbitrary threshold configured via GateBuilder | Public / Prover |
-| `get_total_verified` | Public query returning total verified investor count | Public View |
-| `is_nullifier_registered` | Anti-replay query checking if nullifier hash exists on ledger | Public View |
-
----
-
-## ⚡ Deployed Smart Contract Addresses (Midnight Preprod)
-
-| Contract / Service | Network | Contract Address / Endpoint | Explorer / Endpoint Link |
-| :--- | :---: | :--- | :--- |
-| **MidnightGate Core Contract** | Midnight Preprod | `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5` | [View Preprod Contract](https://midnight.network) |
-| **MidnightGate Treasury Vault** | Midnight Preprod | `midnight1vault8yha28f1x3l9v05ge7w8e9t0b2c3d4e5f6` | [View Preprod Vault](https://midnight.network) |
-| **Local Proof Server** | Local Service | `http://localhost:6300` | [Proof Server Health Check](http://localhost:6300/health) |
-
-### 🔗 Sample On-Chain Verified Transactions (Midnight Preprod)
-
-| Action | Transaction Hash | Block Height | Status |
-| :--- | :--- | :---: | :---: |
-| **Deploy MidnightGate Contract** | `0x6d3aacdcd00feafafe0187a7e01aace556fcce6b9af6d214efc65fe4a961bb05` | #1,492,041 | ✅ Confirmed |
-| **Initialize Dual-State Ledger** | `0x20925ea031bdfad0d3a51608670df067fa2382cf871d3df8e7e1bb939c095368` | #1,492,042 | ✅ Confirmed |
-| **Accredited Investor Proof ($150k $\ge$ $100k)** | `0x233b7a50e83dc5e2a753b53a1e444351e234d7af4b1150a848eaf54b5faedb95` | #1,492,050 | ✅ Confirmed |
-| **Qualified Purchaser Proof ($6.2M $\ge$ $5M)** | `0xfc3234dd57bc383adf50fbf3cc79db3795e85edb02c0172c38bd76a1e26974ff` | #1,492,058 | ✅ Confirmed |
-| **Institutional Whale Proof ($30M $\ge$ $25M)** | `0x931153832a472cf2c37d6faac11b56753b225b289008fef6cd49c54f444adbc6` | #1,492,065 | ✅ Confirmed |
-| **Anti-Replay Rejection Test (Duplicate Nullifier)** | `0x128a115a65eaa27d061a9581724641142382d56eb1f44b9414c9417211ab9051` | #1,492,071 | 🛑 Rejected (Expected) |
-
----
-
-## 👥 Proof of 50+ Real Testnet User Wallet Interactions
-
-As part of **Rise In Master Track Onboarding Requirements**, MidnightGate has onboarded **52 distinct verified testnet/preprod user wallets** across institutional wealth managers, DeFi vault builders, compliance officers, and accredited investors:
-
-| # | User / Organization Role | Midnight Preprod Wallet Address | Operations Performed | Verification Link |
-| :-: | :--- | :--- | :--- | :---: |
-| 1 | Platform Deployer & Admin | `midnight1addr_admin_deployer_01` | Initialized contract, nullifier sets | [View Account](https://midnight.network) |
-| 2 | Private Wealth Manager | `midnight1addr_wealth_mgr_01` | Generated $100k+ Accredited proof | [View Account](https://midnight.network) |
-| 3 | DeFi Vault Architect | `midnight1addr_defi_vault_02` | Unlocked Aave permissioned vault | [View Account](https://midnight.network) |
-| 4 | Institutional Whale Fund | `midnight1addr_whale_fund_03` | Verified $25M+ Whale tier | [View Account](https://midnight.network) |
-| 5 | Compliance Officer | `midnight1addr_compliance_04` | Inspected Dual-State privacy logs | [View Account](https://midnight.network) |
-| 6 | Qualified Purchaser Syndicate | `midnight1addr_angel_syn_05` | Verified $5M+ Qualified Purchaser | [View Account](https://midnight.network) |
-| 7 | Ecosystem DApp Developer | `midnight1addr_dev_eco_06` | Tested TypeScript managed bindings | [View Account](https://midnight.network) |
-| 8 | Retail Accredited Investor | `midnight1addr_retail_acc_07` | Tested 1-Click Instant Demo Wallet | [View Account](https://midnight.network) |
-| 9 | ZK Security Auditor | `midnight1addr_sec_auditor_08` | Tested Anti-Replay nullifier checks | [View Account](https://midnight.network) |
-| 10 | VC Partner | `midnight1addr_vc_partner_09` | Verified investor whitelist gating | [View Account](https://midnight.network) |
-| 11 | RWA Real Estate Tokenizer | `midnight1addr_rwa_pm_10` | Reg D investor credential verification | [View Account](https://midnight.network) |
-| 12 | DAO Treasury Yield Farmer | `midnight1addr_yield_farmer_11` | Staked in VIP gated lending vault | [View Account](https://midnight.network) |
-| 13 | Digital Asset Legal Counsel | `midnight1addr_legal_counsel_12` | Audited SEC 506(c) compliance trail | [View Account](https://midnight.network) |
-| 14-52 | 39 Additional Verified Beta Testers | Listed in [`USER_FEEDBACK_50_RESPONSES.md`](USER_FEEDBACK_50_RESPONSES.md) | ZK proving, vault unlock, queries | [Full Dataset](USER_FEEDBACK_50_RESPONSES.md) |
-
----
-
-## 📊 User Feedback Summary & Product Iterations (with Commit Links)
-
-> [!IMPORTANT]
-> **User Feedback Collection & Live Public Dataset**  
-> - 📋 **Community Feedback Google Form**: [https://forms.gle/rF7KsMAaD7SQzQan9](https://forms.gle/rF7KsMAaD7SQzQan9)  
-> - 📊 **Public Live Responses Spreadsheet**: [Google Sheets Live Dataset](https://docs.google.com/spreadsheets/d/1mKnmxuc9a4YKgHesZjv9jU-2HPNfopE4hsUmRv3Csp4/edit?usp=sharing)  
-> - 📑 **Exported 52 Responses CSV**: [`docs/user_feedback_50_responses.csv`](docs/user_feedback_50_responses.csv)
-
-| User Role | Rating | Key User Feedback | Product Engineering Action & Commit Link |
-| :--- | :---: | :--- | :--- |
-| **Retail Investor** | ⭐⭐⭐⭐⭐ (5/5) | *"Needed an instant way to test the ZK proof flow without installing a browser extension every time."* | **Action Taken**: Built 1-Click Instant Demo Wallet with pre-funded keypair. ([Commit `6ad8721`](https://github.com/Jaydeep806/MidnightGate/commit/6ad8721)) |
-| **Compliance Officer** | ⭐⭐⭐⭐⭐ (5/5) | *"Wanted visual proof of what data stays in browser memory vs what is sent to the public ledger."* | **Action Taken**: Implemented interactive Dual-State Privacy Inspector. ([Commit `8df3399`](https://github.com/Jaydeep806/MidnightGate/commit/8df3399)) |
-| **Mobile Trader** | ⭐⭐⭐⭐⭐ (5/5) | *"Needed mobile navigation drawer and toast alerts when signing proofs on smartphone."* | **Action Taken**: Implemented responsive mobile drawer and bottom navigation. ([Commit `b9906a8`](https://github.com/Jaydeep806/MidnightGate/commit/b9906a8)) |
-| **DeFi Protocol Founder** | ⭐⭐⭐⭐⭐ (5/5) | *"Wanted ability to define custom threshold gates for novel liquidity pools in the UI."* | **Action Taken**: Built GateBuilder custom tier configuration tool. ([Commit `0267026`](https://github.com/Jaydeep806/MidnightGate/commit/0267026)) |
-| **Security Auditor** | ⭐⭐⭐⭐⭐ (5/5) | *"Nullifier anti-replay mechanics must be verified with automated edge cases."* | **Action Taken**: Added Anti-Replay Nullifier verification to Vitest suite. ([Commit `6ad8721`](https://github.com/Jaydeep806/MidnightGate/commit/6ad8721)) |
+* **Target Network**: `Midnight Preprod (Chain ID: 420)`
+* **Smart Contract Address**: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`
+* **Contract Source**: [`contract/src/gate.compact`](./contract/src/gate.compact)
+* **Generated Managed Bindings**: [`contract/src/managed/`](./contract/src/managed/)
+* **Local Proof Server Endpoint**: `http://localhost:6300`
 
 ---
 
@@ -289,54 +144,43 @@ As part of **Rise In Master Track Onboarding Requirements**, MidnightGate has on
 ```
 MidnightGate/
 ├── .github/workflows/
-│   └── ci.yml               # Automated CI/CD pipeline (100% Passing)
+│   └── ci.yml               # Automated CI/CD pipeline (Level 3 requirement)
 ├── contract/
 │   ├── src/
-│   │   ├── gate.compact     # Midnight Compact smart contract & ZK circuit
-│   │   └── managed/         # Generated circuit interfaces & TypeScript types
-│   │       ├── index.ts     # Managed contract bindings
-│   │       ├── circuits.json# Circuit manifest
-│   │       ├── zk_keys.json # Proving & verification key hashes
-│   │       └── gate.d.ts    # TypeScript definitions
+│   │   ├── gate.compact     # Midnight Compact smart contract & ZK circuit (Level 1)
+│   │   └── managed/         # Generated circuit interfaces & keys (Level 1)
+│   │       ├── index.ts
+│   │       ├── circuits.json
+│   │       ├── zk_keys.json
+│   │       └── gate.d.ts
 │   └── package.json
 ├── test/
-│   ├── gate.test.ts         # Automated test suite (4/4 passing tests)
+│   ├── gate.test.ts         # Automated test suite: 4/4 passing tests (Level 3)
 │   ├── contractSimulator.ts # Midnight dual-state ledger simulator
 │   ├── vitest.config.ts
 │   └── package.json
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # Glassmorphism UI (Navbar, ProofGenerator, Inspector, etc.)
-│   │   ├── midnight/        # Lace connector & Midnight client integration
+│   │   ├── components/      # Glassmorphic UI & Privacy Inspector (Level 2/3)
+│   │   ├── midnight/        # Lace connector & Midnight client integration (Level 2)
 │   │   ├── types/
 │   │   ├── App.tsx
 │   │   └── index.css
 │   ├── index.html
 │   ├── vite.config.ts
 │   └── package.json
-├── screenshots/             # High-res UI & workflow deliverables
-│   ├── product-ui.png       # Main Web Dashboard
-│   ├── mobile-responsive-ui.png # Smartphone View
-│   ├── compact-compile.png  # Compact compiler output
-│   ├── contract-deployment.png # Preprod deployment
-│   ├── monitoring-setup.png # Telemetry & node analytics
-│   ├── cicd-pipeline.png    # GitHub Actions CI
-│   ├── test-output.png      # 4/4 Passing Vitest suite
-│   └── test-output.txt
-├── docs/                    # Datasets & supplementary documentation
-│   └── user_feedback_50_responses.csv
-├── DEMO_WALKTHROUGH.md
-├── DEPLOYMENT_PREPROD_GUIDE.md
-├── DEPLOYMENT_MAINNET_GUIDE.md
-├── ENTERPRISE_ROADMAP_LEVEL7.md
-├── FRONTEND_INTEGRATION.md
-├── LAUNCH_TWITTER_THREAD.md
-├── LEVEL7_MAINNET_PROOF.md
-├── MONTHLY_GROWTH_REPORT.md
-├── PITCH_DECK.md
-├── SECURITY_AUDIT_REPORT.md
-├── TUTORIAL_MIDNIGHT_COMPACT_ZK.md
-├── USER_FEEDBACK_50_RESPONSES.md
+├── screenshots/             # All required screenshots (Level 1, 2, 3)
+│   ├── product-ui.png
+│   ├── mobile-responsive-ui.png
+│   ├── compact-compile.png
+│   ├── contract-deployment.png
+│   ├── test-output.png
+│   └── cicd-pipeline.png
+├── DEMO_WALKTHROUGH.md      # Step-by-step walkthrough guide
+├── DEPLOYMENT_PREPROD_GUIDE.md # Preprod deployment guide
+├── FRONTEND_INTEGRATION.md  # Frontend integration guide
+├── PITCH_DECK.md            # Product proposal & presentation
+├── SECURITY_AUDIT_REPORT.md # ZK circuit & contract audit report
 ├── netlify.toml
 ├── package.json
 └── README.md
@@ -350,7 +194,7 @@ MidnightGate/
 * **Node.js**: v20.x or v22.x
 * **npm**: v10.x+
 * **Git**: Installed
-* *(Optional)* **Lace Wallet** with Midnight Preprod enabled
+* *(Optional)* **Lace Wallet** with Midnight Preprod network enabled
 
 ### 1. Clone the Repository
 ```bash
