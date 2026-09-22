@@ -4,7 +4,7 @@
 
 [![MidnightGate CI Pipeline](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml/badge.svg)](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml)
 [![Network](https://img.shields.io/badge/Network-Midnight%20Preprod%20(Chain%20420)-8b5cf6?logo=cardano)](https://midnight.network)
-[![Live Demo](https://img.shields.io/badge/🚀_Live%20DApp-midnight--gate.netlify.app-00C7B7?logo=netlify)](https://github.com/Jaydeep806/MidnightGate)
+[![Live Demo](https://img.shields.io/badge/🚀_Live%20DApp-moonlightmidnightgate.netlify.app-00C7B7?logo=netlify)](https://moonlightmidnightgate.netlify.app/)
 [![Tests Passing](https://img.shields.io/badge/Tests-4%2F4%20Passing-10b981)](./test/gate.test.ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -22,7 +22,7 @@
 | :--- | :--- | :---: |
 | **1. Public GitHub Repository** | [github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate) | ✅ Active & Public |
 | **2. Minimum Meaningful Commits** | [20+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 20+ Commits |
-| **3. Live Production DApp** | [midnight-gate.netlify.app](https://github.com/Jaydeep806/MidnightGate) | ✅ Live & Responsive |
+| **3. Live Production DApp** | [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/) | ✅ Live & Responsive |
 | **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/tyFBRt-QJQs) | ✅ Live on YouTube |
 | **5. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
 | **6. Preprod Deployed Contract Address** | `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5` | ✅ Deployed on Preprod |
