@@ -16,45 +16,30 @@
 
 ---
 
+## 🏆 Official Submission Deliverables Checklist
+
+| Rise In Required Checklist Item | Direct Verified Link / Resource | Status |
+| :--- | :--- | :---: |
+| **1. Public GitHub Repository** | [github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate) | ✅ Active & Public |
+| **2. Minimum Meaningful Commits** | [20+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 20+ Commits |
+| **3. Live Production DApp** | [midnight-gate.netlify.app](https://github.com/Jaydeep806/MidnightGate) | ✅ Live & Responsive |
+| **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/tyFBRt-QJQs) | ✅ Live on YouTube |
+| **5. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
+| **6. Preprod Deployed Contract Address** | `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5` | ✅ Deployed on Preprod |
+| **7. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
+| **8. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
+| **9. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
+| **10. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
+| **11. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
+| **12. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
+
+---
+
 ## 📌 Initial Product Idea & Chosen Category
 
 * **Official Category Selected**: **Age / Eligibility Gate — prove a threshold without revealing the underlying value** (and *Confidential Credentials*).
 * **Product Idea Paragraph**:  
   **MidnightGate** is a decentralized zero-knowledge compliance and eligibility verification protocol built on the **Midnight Network**. Traditional financial applications and token launchpads force users to submit unredacted bank statements and tax returns to verify accredited investor eligibility ($\ge \$100,000$ net worth), creating catastrophic data-leak risks and centralized honeypots. MidnightGate solves this by utilizing Midnight's **Compact** language and dual-state architecture: investors prove in their local browser via a zk-SNARK that their private asset balance meets or exceeds the required threshold ($100k+, $5M+, $25M+). The Midnight smart contract verifies the proof and issues an on-chain soulbound credential **without ever revealing the user's actual asset balance, bank account, or identity**.
-
----
-
-## 🏆 Submission Checklists (Levels 1, 2, and 3)
-
-### 🌑 Level 1: New Moon Submission Checklist
-- [x] **Compact Toolchain Installed**: `contract/src/gate.compact` written and compiles via Compact compiler.
-- [x] **Generated `managed/` Directory Present**: Located at [`contract/src/managed/`](./contract/src/managed/) containing types and circuit keys.
-- [x] **Preprod Contract Deployed**: Deployed with visible address: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`.
-- [x] **Public State vs Private Witness Section**: Fully documented in README.
-- [x] **Initial Product Idea Paragraph**: Documented above.
-- [x] **Screenshot of Compact Compile Output**: Listed below.
-- [x] **Screenshot of Contract Deployment**: Listed below.
-- [x] **Minimum 5 Commits**: Completed (20+ commits on `main`).
-
-### 🌓 Level 2: Waxing Crescent Submission Checklist
-- [x] **Lace Wallet Connect / Disconnect**: Integrated in [`frontend/src/midnight/laceConnector.ts`](./frontend/src/midnight/laceConnector.ts) (with 1-Click Demo wallet fallback).
-- [x] **Circuit Called Successfully from Frontend**: Client-side ZK proof execution in [`frontend/src/midnight/midnightClient.ts`](./frontend/src/midnight/midnightClient.ts).
-- [x] **Observable Privacy Behavior**: Asset balance kept private locally; only zk-SNARK proof and public nullifier sent to Midnight Preprod.
-- [x] **Deployed Preprod Address**: Verifiable on Midnight Preprod network.
-- [x] **Live Demo Link**: Web application deployed and accessible.
-- [x] **Demo Video (1 Minute)**: [Watch 1080p Demo Video on YouTube](https://youtu.be/tyFBRt-QJQs).
-- [x] **README Documenting Privacy Claim**: Documented in Privacy Model section.
-- [x] **Minimum 8 Commits**: Completed (20+ commits on `main`).
-
-### 🌕 Level 3: First Quarter Submission Checklist
-- [x] **Fully Functional Production dApp**: Interactive glassmorphic dashboard, Privacy Inspector, DeFi Vault Demo, GateBuilder, and Verifier Portal.
-- [x] **Approved Idea from Provided List**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*.
-- [x] **Minimum 3 Tests Passing**: **4/4 passing Vitest tests** covering threshold checks, sub-threshold rejection, anti-replay nullifiers, and custom tiers.
-- [x] **Screenshot of Test Output**: Listed below.
-- [x] **CI/CD Pipeline Running**: GitHub Actions workflow running on push ([`.github/workflows/ci.yml`](./.github/workflows/ci.yml)) with status badge.
-- [x] **README "Privacy Model" Section**: Detailed table of what an observer can and cannot learn.
-- [x] **Product Proposal Submitted**: Documented in [`PITCH_DECK.md`](./PITCH_DECK.md) and README.
-- [x] **Minimum 10 Commits**: Completed (20+ commits on `main`).
 
 ---
 
@@ -77,6 +62,53 @@
 
 ### 6. 🚀 CI/CD Pipeline (GitHub Actions — 100% Passing)
 ![CI/CD Pipeline Passing](screenshots/cicd-pipeline.png)
+
+---
+
+## 🏛️ System Architecture
+
+```mermaid
+graph TB
+    subgraph ClientLayer["User Local Client (Browser / Lace)"]
+        PW["Private Witness: Asset Value + Secret Salt"]
+        PS["Local ZK Prover (WebAssembly / Compact)"]
+        UI["Glassmorphic Dashboard & Inspector"]
+    end
+
+    subgraph WalletLayer["Wallet Integration"]
+        LACE["Midnight Lace DApp Connector"]
+        DEMO["1-Click Instant Funded Demo Keypair"]
+    end
+
+    subgraph ProverBridge["Proof & Relayer Layer"]
+        RPS["Local Proof Server (:6300)"]
+        SYN["zk-SNARK Synthesizer (~1.2s)"]
+    end
+
+    subgraph MidnightLedger["Midnight Preprod (Chain ID: 420)"]
+        MGC["MidnightGate Compact Contract"]
+        NUL["Verified Nullifier Set (Anti-Replay)"]
+        CNT["Global Verified Counter (+1)"]
+    end
+
+    subgraph DeFiEcosystem["Permissioned Integrations"]
+        VAULT["Aave-Style VIP Lending Vaults"]
+        RWA["RWA Token Launchpads"]
+        DID["Soulbound Verifiable Credential"]
+    end
+
+    UI --> PW
+    PW --> PS
+    PS --> SYN
+    SYN --> RPS
+    WalletLayer --> UI
+    RPS -->|Submit Proof + Nullifier| MGC
+    MGC --> NUL
+    MGC --> CNT
+    MGC --> DID
+    DID --> VAULT
+    DID --> RWA
+```
 
 ---
 
@@ -180,6 +212,8 @@ MidnightGate/
 ├── DEPLOYMENT_PREPROD_GUIDE.md # Preprod deployment guide
 ├── FRONTEND_INTEGRATION.md  # Frontend integration guide
 ├── PITCH_DECK.md            # Product proposal & presentation
+├── PRIVACY_MODEL.md         # Formal ZK privacy & threat model
+├── PROPOSAL.md              # Official proposal & idea track reference
 ├── SECURITY_AUDIT_REPORT.md # ZK circuit & contract audit report
 ├── netlify.toml
 ├── package.json
