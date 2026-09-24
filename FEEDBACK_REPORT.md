@@ -4,6 +4,7 @@
 > **Protocol**: MidnightGate (ZK Net Worth & Accredited Investor Verifier)  
 > **Live DApp**: [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/)  
 > **Live Feedback Form**: [Google Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog)  
+> **Live Responses Spreadsheet**: [Google Sheets Live Responses (50+ Testers)](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing)  
 > **Verified Testers**: 50+ Midnight Preprod Users  
 
 ---
@@ -23,10 +24,13 @@ We collected structured feedback through our live Google Form, community Discord
 
 ---
 
-## 🔗 Official Feedback Form Link
+## 🔗 Official Feedback Links
 
 * **Live Feedback Form URL**:  
   👉 [https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog)
+
+* **Live User Responses Spreadsheet (Public View)**:  
+  📊 [https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing)
 
 ---
 
