@@ -289,6 +289,7 @@ def create_pptx(output_path):
         ("Level 1: New Moon", "Compact Contract + managed/ Bindings + Preprod Deployment", "✅ APPROVED"),
         ("Level 2: Waxing Crescent", "Lace Wallet Connector + Frontend ZK Prover + Demo Video", "✅ APPROVED"),
         ("Level 3: First Quarter", "CI/CD Pipeline + 4/4 Vitest Tests + Approved Idea Proposal", "✅ APPROVED"),
+        ("Level 4: Waxing Gibbous", "Working Preprod MVP + Product X Profile (@MidnightGateZK)", "✅ APPROVED"),
         ("Public GitHub Repo", "github.com/Jaydeep806/MidnightGate (20+ Meaningful Commits)", "✅ VERIFIED"),
         ("Live Production DApp", "moonlightmidnightgate.netlify.app", "✅ ACTIVE"),
         ("ZK Security & Audit", "Passed 100% (Zero Critical / High Findings)", "✅ PASSED")

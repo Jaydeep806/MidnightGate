@@ -5,13 +5,14 @@
 [![MidnightGate CI Pipeline](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml/badge.svg)](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml)
 [![Network](https://img.shields.io/badge/Network-Midnight%20Preprod%20(Chain%20420)-8b5cf6?logo=cardano)](https://midnight.network)
 [![Live Demo](https://img.shields.io/badge/🚀_Live%20DApp-moonlightmidnightgate.netlify.app-00C7B7?logo=netlify)](https://moonlightmidnightgate.netlify.app/)
+[![Product X Profile](https://img.shields.io/badge/Product_X_Profile-@MidnightGateZK-000000?logo=x)](https://x.com/MidnightGateZK)
 [![Tests Passing](https://img.shields.io/badge/Tests-4%2F4%20Passing-10b981)](./test/gate.test.ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
 > Built for the **Rise In: Monthly Moonshots on Midnight** Challenge  
-> **Level 1 (New Moon)** • **Level 2 (Waxing Crescent)** • **Level 3 (First Quarter)**  
+> **Level 1 (New Moon)** • **Level 2 (Waxing Crescent)** • **Level 3 (First Quarter)** • **Level 4 (Waxing Gibbous)**  
 > **Chosen Track from Provided List**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*
 
 ---
@@ -21,19 +22,20 @@
 | Rise In Required Checklist Item | Direct Verified Link / Resource | Status |
 | :--- | :--- | :---: |
 | **1. Public GitHub Repository** | [github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate) | ✅ Active & Public |
-| **2. Minimum Meaningful Commits** | [20+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 20+ Commits |
+| **2. Minimum Meaningful Commits** | [20+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 20+ Commits (Req: 15+) |
 | **3. Live Production DApp** | [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/) | ✅ Live & Responsive |
 | **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/SwvZJFEYK2M) | ✅ Live on YouTube |
-| **5. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
-| **6. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
-| **7. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
-| **8. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
-| **9. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
-| **10. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
-| **11. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
-| **12. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
-| **13. Pitch Deck Presentation (.pptx)** | [`MidnightGate_Presentation.pptx`](./MidnightGate_Presentation.pptx) | ✅ Downloadable PPTX |
-| **14. Pitch Deck Document (.pdf)** | [`MidnightGate_PitchDeck.pdf`](./MidnightGate_PitchDeck.pdf) | ✅ Downloadable PDF |
+| **5. Product X (Twitter) Profile** | [@MidnightGateZK on X](https://x.com/MidnightGateZK) | ✅ Building in Public |
+| **6. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
+| **7. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
+| **8. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
+| **9. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
+| **10. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
+| **11. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
+| **12. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
+| **13. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
+| **14. Pitch Deck Presentation (.pptx)** | [`MidnightGate_Presentation.pptx`](./MidnightGate_Presentation.pptx) | ✅ Downloadable PPTX |
+| **15. Pitch Deck Document (.pdf)** | [`MidnightGate_PitchDeck.pdf`](./MidnightGate_PitchDeck.pdf) | ✅ Downloadable PDF |
 
 ---
 
@@ -284,9 +286,22 @@ Open your browser at `http://localhost:5173`.
 
 ---
 
+## 📢 Building in Public & Product Profile on X (Level 4: Waxing Gibbous)
+
+MidnightGate is actively building in public across the Midnight ecosystem:
+
+* **Official Product X (Twitter) Profile**: [@MidnightGateZK](https://x.com/MidnightGateZK)
+* **Weekly Development Updates**: Live progress on Compact smart contract circuits, Preprod ledger deployments, and community feedback.
+* **Preprod Live DApp**: [`https://moonlightmidnightgate.netlify.app/`](https://moonlightmidnightgate.netlify.app/)
+* **Preprod Contract Address**: `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3`
+* **Automated CI/CD**: [GitHub Actions Status](https://github.com/Jaydeep806/MidnightGate/actions/workflows/ci.yml)
+
+---
+
 ## 📄 License
 This project is open-source under the [MIT License](LICENSE).
 
 <p align="center">
   Built with 🌙 for privacy-first decentralized finance on <a href="https://midnight.network">Midnight Network</a>
 </p>
+
