@@ -11,15 +11,15 @@
     "lint": "npm --prefix frontend run lint"
   },
   "dependencies": {
-    "@midnight-ntwrk/compact-runtime": "^0.2.0",
-    "@midnight-ntwrk/dapp-connector-api": "^0.2.0",
-    "@midnight-ntwrk/ledger": "^0.2.0",
-    "@midnight-ntwrk/midnight-js-contracts": "^0.2.0",
-    "@midnight-ntwrk/midnight-js-http-client": "^0.2.0",
-    "@midnight-ntwrk/midnight-js-network-provider": "^0.2.0",
-    "@midnight-ntwrk/midnight-js-types": "^0.2.0",
-    "@midnight-ntwrk/wallet": "^0.2.0",
-    "@midnight-ntwrk/wallet-api": "^0.2.0"
+    "@midnight-ntwrk/compact-runtime": "file:./packages/compact-runtime",
+    "@midnight-ntwrk/dapp-connector-api": "file:./packages/dapp-connector-api",
+    "@midnight-ntwrk/ledger": "file:./packages/ledger",
+    "@midnight-ntwrk/midnight-js-contracts": "file:./packages/midnight-js-contracts",
+    "@midnight-ntwrk/midnight-js-http-client": "file:./packages/midnight-js-http-client",
+    "@midnight-ntwrk/midnight-js-network-provider": "file:./packages/midnight-js-network-provider",
+    "@midnight-ntwrk/midnight-js-types": "file:./packages/midnight-js-types",
+    "@midnight-ntwrk/wallet": "file:./packages/wallet",
+    "@midnight-ntwrk/wallet-api": "file:./packages/wallet-api"
   },
   "keywords": [
     "midnight-network",
