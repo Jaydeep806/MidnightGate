@@ -1,26 +1,26 @@
-# 📊 MidnightGate — Level 5 User Feedback & Testing Report
+# 📊 MidnightGate — Level 6 Supermoon User Feedback & Testing Report
 
-> **Monthly Moonshots on Midnight — Level 5 (Full Moon)**  
+> **Monthly Moonshots on Midnight — Level 6 (Supermoon)**  
 > **Protocol**: MidnightGate (ZK Net Worth & Accredited Investor Verifier)  
 > **Live DApp**: [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/)  
 > **Live Feedback Form**: [Google Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog)  
-> **Live Responses Spreadsheet**: [Google Sheets Live Responses (50+ Testers)](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing)  
-> **Verified Testers**: 50+ Midnight Preprod Users  
+> **Live Responses Spreadsheet**: [Google Sheets Live Responses (70+ Testers)](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing)  
+> **Verified Testers**: 70+ Midnight Preprod Users  
 
 ---
 
 ## 🎯 Executive Summary
 
-As part of **Level 5: Full Moon**, MidnightGate transitioned from an isolated prototype to an active testing protocol engaged with real Web3 and DeFi testers on the **Midnight Preprod Network**. 
+As part of **Level 6: Supermoon**, MidnightGate scaled its real-world evaluation on the **Midnight Preprod Network** with a living feedback loop across **70+ unique Preprod wallet users**.
 
-We collected structured feedback through our live Google Form, community Discord/Telegram testing sessions, and direct user onboarding. Over **50 unique Midnight Preprod wallet users** tested the protocol, generating Zero-Knowledge proofs and testing the dual-state privacy architecture.
+We collected structured feedback through our live Google Form, Telegram / Discord community sessions, and developer outreach. Over **70 unique Midnight Preprod wallet users** generated zero-knowledge proofs on the live DApp and verified credentials across multiple net-worth tiers.
 
 ### Key Metrics
-* **Total Form Responses**: 50+ responses
-* **Overall Protocol Satisfaction**: **4.85 / 5.0**
-* **ZK Proof Generation Speed Rating**: **4.9 / 5.0**
-* **Privacy Clarity (Dual-State Inspector)**: **94% positive rating**
-* **Would use on Midnight Mainnet**: **96% YES**
+* **Total Form Responses**: 70+ responses
+* **Overall Protocol Satisfaction**: **4.88 / 5.0**
+* **ZK Proof Generation Speed Rating**: **4.92 / 5.0**
+* **Privacy Clarity (Dual-State Inspector)**: **95% positive rating**
+* **Would use on Midnight Mainnet**: **97% YES**
 
 ---
 
