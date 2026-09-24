@@ -12,30 +12,33 @@
 ---
 
 > Built for the **Rise In: Monthly Moonshots on Midnight** Challenge  
-> **Level 1 (New Moon)** • **Level 2 (Waxing Crescent)** • **Level 3 (First Quarter)** • **Level 4 (Waxing Gibbous)**  
+> **Level 1 (New Moon)** • **Level 2 (Waxing Crescent)** • **Level 3 (First Quarter)** • **Level 4 (Waxing Gibbous)** • **Level 5 (Full Moon)**  
 > **Chosen Track from Provided List**: *Age / Eligibility Gate — prove a threshold without revealing the underlying value*
 
 ---
 
-## 🏆 Official Submission Deliverables Checklist
+## 🏆 Official Submission Deliverables Checklist (Level 1 → Level 5)
 
 | Rise In Required Checklist Item | Direct Verified Link / Resource | Status |
 | :--- | :--- | :---: |
 | **1. Public GitHub Repository** | [github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate) | ✅ Active & Public |
-| **2. Minimum Meaningful Commits** | [20+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 20+ Commits (Req: 15+) |
+| **2. Minimum Meaningful Commits** | [28+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 28+ Commits (Req: 20+) |
 | **3. Live Production DApp** | [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/) | ✅ Live & Responsive |
 | **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/SwvZJFEYK2M) | ✅ Live on YouTube |
 | **5. Product X (Twitter) Profile** | [@MidnightGateZK on X](https://x.com/MidnightGateZK) | ✅ Building in Public |
-| **6. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
-| **7. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
-| **8. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
-| **9. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
-| **10. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
-| **11. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
-| **12. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
-| **13. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
-| **14. Pitch Deck Presentation (.pptx)** | [`MidnightGate_Presentation.pptx`](./MidnightGate_Presentation.pptx) | ✅ Downloadable PPTX |
-| **15. Pitch Deck Document (.pdf)** | [`MidnightGate_PitchDeck.pdf`](./MidnightGate_PitchDeck.pdf) | ✅ Downloadable PDF |
+| **6. 50 Preprod User Wallets (Verifiable)** | [`PREPROD_USERS.md`](./PREPROD_USERS.md) | ✅ 50/50 On-Chain Wallets |
+| **7. User Feedback Loop Documentation** | [`FEEDBACK_REPORT.md`](./FEEDBACK_REPORT.md) | ✅ 50+ Form Responses |
+| **8. Google Feedback Form (Live)** | [Submit Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog) | ✅ Active & Public |
+| **9. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
+| **10. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
+| **11. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
+| **12. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
+| **13. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
+| **14. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
+| **15. Dual-State Architecture Spec** | [Jump to Architecture Section ⬇️](#-system-architecture) | ✅ Public vs Private Tables |
+| **16. Security & Circuit Audit Report** | [`SECURITY_AUDIT_REPORT.md`](./SECURITY_AUDIT_REPORT.md) | ✅ Passed 100% |
+| **17. Pitch Deck Presentation (.pptx)** | [`MidnightGate_Presentation.pptx`](./MidnightGate_Presentation.pptx) | ✅ Downloadable PPTX |
+| **18. Pitch Deck Document (.pdf)** | [`MidnightGate_PitchDeck.pdf`](./MidnightGate_PitchDeck.pdf) | ✅ Downloadable PDF |
 
 ---
 
