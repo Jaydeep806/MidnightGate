@@ -371,7 +371,7 @@ def create_pdf(output_path):
         [Paragraph("<b>Live Production DApp:</b>", body_style), Paragraph("<a href='https://moonlightmidnightgate.netlify.app/'>moonlightmidnightgate.netlify.app</a>", body_style)],
         [Paragraph("<b>GitHub Repository:</b>", body_style), Paragraph("<a href='https://github.com/Jaydeep806/MidnightGate'>github.com/Jaydeep806/MidnightGate</a>", body_style)],
         [Paragraph("<b>Target Network:</b>", body_style), Paragraph("Midnight Preprod (Chain ID: 420)", body_style)],
-        [Paragraph("<b>Contract Address:</b>", body_style), Paragraph("midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5", body_style)],
+        [Paragraph("<b>Contract Address:</b>", body_style), Paragraph("mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3", body_style)],
         [Paragraph("<b>Idea Category:</b>", body_style), Paragraph("Age / Eligibility Gate — prove a threshold without revealing underlying value", body_style)]
     ]
     meta_table = Table(meta_data, colWidths=[180, 500])

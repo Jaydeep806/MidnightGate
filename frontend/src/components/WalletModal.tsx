@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Sparkles, Rocket, Shield, ArrowRight, Loader2, AlertTriangle, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, Shield, ArrowRight, Loader2, AlertTriangle, ExternalLink, CheckCircle2, Cpu } from 'lucide-react';
 import { WalletType } from '../types';
 import { walletService } from '../midnight/laceConnector';
 
@@ -17,7 +17,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
   isConnecting
 }) => {
   const [hasLace, setHasLace] = useState<boolean>(false);
-  const [hasFreighter, setHasFreighter] = useState<boolean>(false);
+  const [hasProofServer, setHasProofServer] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [activePendingWallet, setActivePendingWallet] = useState<string | null>(null);
 
@@ -26,7 +26,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
       setErrorMessage(null);
       setActivePendingWallet(null);
       walletService.hasLaceExtension().then(setHasLace);
-      walletService.hasFreighterExtension().then(setHasFreighter);
+      walletService.hasProofServer().then(setHasProofServer);
     }
   }, [isOpen]);
 
@@ -37,8 +37,8 @@ export const WalletModal: React.FC<WalletModalProps> = ({
       setErrorMessage(null);
       if (type === 'LACE_DAPP_CONNECTOR') {
         setActivePendingWallet('Lace Wallet');
-      } else if (type === 'STELLAR_FREIGHTER') {
-        setActivePendingWallet('Stellar Freighter');
+      } else if (type === 'MIDNIGHT_PROOF_SERVER') {
+        setActivePendingWallet('Local Proof Server');
       } else {
         setActivePendingWallet('Quick Demo');
       }
@@ -63,8 +63,8 @@ export const WalletModal: React.FC<WalletModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <div>
-            <h2 className="text-lg font-bold text-white font-sans">Connect Your Real Wallet</h2>
-            <p className="text-xs text-slate-400">Select an installed wallet extension to interact on-chain</p>
+            <h2 className="text-lg font-bold text-white font-sans">Connect Midnight Wallet</h2>
+            <p className="text-xs text-slate-400">Select an official Midnight connector or sandbox account</p>
           </div>
           <button
             onClick={onClose}
@@ -83,27 +83,6 @@ export const WalletModal: React.FC<WalletModalProps> = ({
                 <p className="font-semibold text-rose-100">{errorMessage}</p>
               </div>
             </div>
-
-            {errorMessage.includes('FREIGHTER') && (
-              <div className="flex items-center space-x-2 pt-1">
-                <a
-                  href="https://www.freighter.app/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-3 py-1.5 rounded-xl bg-sky-600 text-white font-semibold text-xs inline-flex items-center space-x-1 hover:bg-sky-500 transition-all shadow"
-                >
-                  <span>Install Freighter Extension</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-                <button
-                  type="button"
-                  onClick={() => handleConnect('DEMO_WALLET')}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs hover:text-white transition-all"
-                >
-                  Use Demo Wallet
-                </button>
-              </div>
-            )}
 
             {errorMessage.includes('LACE') && (
               <div className="flex items-center space-x-2 pt-1">
@@ -155,7 +134,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
                   {hasLace ? (
                     <span className="text-[11px] font-mono text-emerald-400 flex items-center space-x-1">
                       <CheckCircle2 className="w-3 h-3" />
-                      <span>Extension Detected (Ready)</span>
+                      <span>Lace Extension Ready (mnLace)</span>
                     </span>
                   ) : (
                     <span className="text-[11px] font-mono text-slate-400">
@@ -168,36 +147,36 @@ export const WalletModal: React.FC<WalletModalProps> = ({
             <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-purple-300 group-hover:translate-x-1 transition-all" />
           </button>
 
-          {/* Option 2: Stellar Freighter Wallet */}
+          {/* Option 2: Local Midnight Proof Server */}
           <button
-            onClick={() => handleConnect('STELLAR_FREIGHTER')}
+            onClick={() => handleConnect('MIDNIGHT_PROOF_SERVER')}
             disabled={isConnecting}
             className="w-full text-left p-4 rounded-2xl glass-card hover:border-sky-500/60 hover:bg-midnight-850/80 transition-all flex items-center justify-between group cursor-pointer border border-sky-500/20"
           >
             <div className="flex items-center space-x-3.5">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 p-0.5 shadow-md shadow-blue-900/40 flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 p-0.5 shadow-md shadow-sky-900/40 flex-shrink-0">
                 <div className="w-full h-full bg-midnight-950 rounded-[10px] flex items-center justify-center">
-                  <Rocket className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
+                  <Cpu className="w-5 h-5 text-sky-400 group-hover:scale-110 transition-transform" />
                 </div>
               </div>
               <div>
                 <div className="flex items-center space-x-2">
                   <h3 className="text-sm font-bold text-white group-hover:text-sky-300 transition-colors">
-                    Stellar Freighter
+                    Local Proof Server
                   </h3>
                   <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-300 border border-sky-500/20">
-                    Official API
+                    localhost:6300
                   </span>
                 </div>
                 <div className="flex items-center space-x-1.5 mt-0.5">
-                  {hasFreighter ? (
+                  {hasProofServer ? (
                     <span className="text-[11px] font-mono text-emerald-400 flex items-center space-x-1">
                       <CheckCircle2 className="w-3 h-3" />
-                      <span>Freighter Detected (Ready)</span>
+                      <span>Proof Server Online</span>
                     </span>
                   ) : (
                     <span className="text-[11px] font-mono text-slate-400">
-                      Official Freighter Pop-up Authorization
+                      Standard Midnight Proof Synthesizer
                     </span>
                   )}
                 </div>
@@ -206,7 +185,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
             <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-sky-300 group-hover:translate-x-1 transition-all" />
           </button>
 
-          {/* Option 3: Quick Demo Testnet Wallet */}
+          {/* Option 3: Quick Demo Testnet Sandbox Wallet */}
           <button
             onClick={() => handleConnect('DEMO_WALLET')}
             disabled={isConnecting}
@@ -228,7 +207,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  No extension required • Pre-funded 5,000 tDUST for instant evaluator testing
+                  Pre-funded 5,000 tDUST • Ready for instant evaluator &amp; judge verification
                 </p>
               </div>
             </div>
@@ -242,7 +221,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
             <Loader2 className="w-4 h-4 animate-spin text-purple-300" />
             <span>
               {activePendingWallet
-                ? `Prompting ${activePendingWallet} extension... Please check your browser popup.`
+                ? `Prompting ${activePendingWallet}... Please check your browser popup.`
                 : 'Connecting to wallet...'}
             </span>
           </div>
@@ -250,10 +229,11 @@ export const WalletModal: React.FC<WalletModalProps> = ({
 
         {/* Footer Note */}
         <div className="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
-          <span>Midnight Preprod &amp; Stellar Testnet</span>
+          <span>Midnight Preprod Testnet</span>
           <span className="text-purple-300">Zero-Knowledge Secured</span>
         </div>
       </div>
     </div>
   );
 };
+

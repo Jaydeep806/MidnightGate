@@ -10,6 +10,17 @@
     "test:coverage": "npm --prefix test run test:coverage",
     "lint": "npm --prefix frontend run lint"
   },
+  "dependencies": {
+    "@midnight-ntwrk/compact-runtime": "^0.2.0",
+    "@midnight-ntwrk/dapp-connector-api": "^0.2.0",
+    "@midnight-ntwrk/ledger": "^0.2.0",
+    "@midnight-ntwrk/midnight-js-contracts": "^0.2.0",
+    "@midnight-ntwrk/midnight-js-http-client": "^0.2.0",
+    "@midnight-ntwrk/midnight-js-network-provider": "^0.2.0",
+    "@midnight-ntwrk/midnight-js-types": "^0.2.0",
+    "@midnight-ntwrk/wallet": "^0.2.0",
+    "@midnight-ntwrk/wallet-api": "^0.2.0"
+  },
   "keywords": [
     "midnight-network",
     "zero-knowledge",
@@ -18,8 +29,10 @@
     "risein",
     "lace-wallet",
     "preprod",
-    "privacy"
+    "privacy",
+    "midnight-js"
   ],
   "author": "Jaydeep",
   "license": "MIT"
 }
+

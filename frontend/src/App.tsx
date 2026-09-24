@@ -56,8 +56,8 @@ export const App: React.FC = () => {
       let state: WalletState;
       if (type === 'LACE_DAPP_CONNECTOR') {
         state = await walletService.connectLace();
-      } else if (type === 'STELLAR_FREIGHTER') {
-        state = await walletService.connectFreighter();
+      } else if (type === 'MIDNIGHT_PROOF_SERVER') {
+        state = await walletService.connectProofServer();
       } else {
         state = await walletService.connectDemo();
       }

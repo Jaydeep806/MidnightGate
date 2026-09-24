@@ -45,7 +45,7 @@ export circuit verify_and_register_credential(
 ): Bytes<32> {
     // 1. Ingest private witnesses from local storage
     const asset_value = user_asset_value();
-    const secret_salt = user_salt_secret();
+    const secret_salt = user_secret_salt();
 
     // 2. Zero-Knowledge Threshold Invariant Check
     // Constraint: Asset value must meet or exceed the required threshold

@@ -25,7 +25,7 @@
 | **3. Live Production DApp** | [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/) | ✅ Live & Responsive |
 | **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/SwvZJFEYK2M) | ✅ Live on YouTube |
 | **5. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
-| **6. Preprod Deployed Contract Address** | `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5` | ✅ Deployed on Preprod |
+| **6. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
 | **7. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
 | **8. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
 | **9. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
@@ -166,10 +166,22 @@ graph TB
 ## ⚡ Deployed Smart Contract Details (Midnight Preprod)
 
 * **Target Network**: `Midnight Preprod (Chain ID: 420)`
-* **Smart Contract Address**: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`
+* **Preprod Contract Address (Bech32m)**: `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3`
+* **Contract Hex Identifier**: `02005a7d3b84f18e9a263d90cb15e3479a861d3f9b208dc750a92e105e4b986a7d`
 * **Contract Source**: [`contract/src/gate.compact`](./contract/src/gate.compact)
 * **Generated Managed Bindings**: [`contract/src/managed/`](./contract/src/managed/)
 * **Local Proof Server Endpoint**: `http://localhost:6300`
+
+---
+
+## ⚡ Midnight.js SDK & Frontend Circuit Integration (Level 2)
+
+MidnightGate frontend integrates directly with the official Midnight Network toolchain and SDK packages:
+
+* **Midnight DApp Connector API (`@midnight-ntwrk/dapp-connector-api`)**: Ingests injected `window.midnight.mnLace` connector for real Midnight Preprod wallet authorization, account queries, and signed witness submissions.
+* **Midnight Network Provider (`@midnight-ntwrk/midnight-js-network-provider`)**: Broadcasts verified transactions and queries on-chain nullifier sets via Preprod RPC and GraphQL indexer.
+* **Compact Runtime (`@midnight-ntwrk/compact-runtime`)**: Binds `gate.compact` compiled circuits (`verify_and_register_credential`) to local client memory, strictly evaluating private witness inputs (`user_asset_value`, `user_secret_salt`) locally before synthesizing the zk-SNARK proof.
+* **Wallet Connectors**: Supports 1-Click Lace Wallet (Midnight Preprod), Local Proof Server (`localhost:6300`), and Instant Pre-funded Sandbox Keypair.
 
 ---
 

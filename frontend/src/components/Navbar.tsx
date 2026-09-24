@@ -23,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const getWalletIcon = () => {
     switch (wallet.connectorType) {
-      case 'STELLAR_FREIGHTER':
+      case 'MIDNIGHT_PROOF_SERVER':
         return <Rocket className="w-3.5 h-3.5 text-sky-400" />;
       case 'DEMO_WALLET':
         return <Sparkles className="w-3.5 h-3.5 text-emerald-400" />;
@@ -34,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const getWalletBadgeClass = () => {
     switch (wallet.connectorType) {
-      case 'STELLAR_FREIGHTER':
+      case 'MIDNIGHT_PROOF_SERVER':
         return 'text-sky-400 bg-sky-500/10 border-sky-500/20';
       case 'DEMO_WALLET':
         return 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20';

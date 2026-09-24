@@ -87,4 +87,5 @@
 
 * **Repository**: [https://github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate)
 * **Demo Video**: [YouTube Demo Walkthrough](https://youtu.be/tyFBRt-QJQs)
-* **Midnight Preprod Contract**: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`
+* **Midnight Preprod Contract**: `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3`
+

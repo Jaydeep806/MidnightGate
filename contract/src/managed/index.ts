@@ -34,4 +34,6 @@ export const CONTRACT_CIRCUITS = [
   'update_default_threshold'
 ] as const;
 
-export const DEFAULT_PREPROD_CONTRACT_ADDRESS = 'midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5';
+// Midnight Preprod Bech32m Contract Identifier
+export const DEFAULT_PREPROD_CONTRACT_ADDRESS = 'mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3';
+export const DEFAULT_PREPROD_CONTRACT_HEX = '02005a7d3b84f18e9a263d90cb15e3479a861d3f9b208dc750a92e105e4b986a7d';

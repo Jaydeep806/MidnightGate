@@ -16,7 +16,7 @@ export interface VerificationTier {
   iconName: string;
 }
 
-export type WalletType = 'LACE_DAPP_CONNECTOR' | 'STELLAR_FREIGHTER' | 'DEMO_WALLET';
+export type WalletType = 'LACE_DAPP_CONNECTOR' | 'MIDNIGHT_PROOF_SERVER' | 'DEMO_WALLET';
 
 export interface WalletState {
   isConnected: boolean;

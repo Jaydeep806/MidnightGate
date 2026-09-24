@@ -31,7 +31,7 @@ export circuit verify_and_register_credential(
 ): Bytes<32> {
     // 1. Fetch private witnesses
     const asset_value = user_asset_value();
-    const secret_salt = user_salt_secret();
+    const secret_salt = user_secret_salt();
 
     // 2. Zero-Knowledge Threshold Invariant Constraint Check
     assert(
@@ -204,7 +204,7 @@ jobs:
               </li>
               <li className="flex items-center space-x-1.5">
                 <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Lace / Freighter DApp connector</span>
+                <span>Lace DApp connector &amp; Proof Server</span>
               </li>
               <li className="flex items-center space-x-1.5">
                 <Check className="w-3.5 h-3.5 text-emerald-400" />

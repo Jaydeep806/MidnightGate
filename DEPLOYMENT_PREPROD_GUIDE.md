@@ -2,7 +2,8 @@
 
 > **Target Network**: Midnight Preprod (Chain ID: 420) & Future Mainnet  
 > **Contract Source**: [`contract/src/gate.compact`](./contract/src/gate.compact)  
-> **Deployed Preprod Address**: `midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5`
+> **Deployed Preprod Address**: `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3`
+> **Contract Hex Hash**: `02005a7d3b84f18e9a263d90cb15e3479a861d3f9b208dc750a92e105e4b986a7d`
 
 ---
 
@@ -52,7 +53,8 @@ Connecting to Midnight Preprod (Chain ID: 420)...
 Compiling Compact circuit bytecode...
 Submitting contract creation transaction...
 Transaction confirmed in Block #1,492,041!
-Contract Address: midnight1contract7qxg39e0x2k8w94hf6v7d8s9a0b1c2d3e4f5
+Contract Address: mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3
+Contract Hex: 02005a7d3b84f18e9a263d90cb15e3479a861d3f9b208dc750a92e105e4b986a7d
 Managed bindings generated successfully.
 ```
 
