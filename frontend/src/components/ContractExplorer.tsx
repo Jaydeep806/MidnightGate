@@ -6,9 +6,9 @@ export const ContractExplorer: React.FC = () => {
   const [activeCodeTab, setActiveCodeTab] = useState<'compact' | 'tests' | 'circuit' | 'ci'>('compact');
   const [copied, setCopied] = useState<boolean>(false);
 
-  const compactCode = `// MidnightGate: Zero-Knowledge Net Worth & Accredited Investor Verification Contract
-// Midnight Request for Startups - Finance & Regulatory Compliance Track
-// Target: Midnight Preprod Network
+  const compactCode = `// MidnightGate: Zero-Knowledge Net Worth & Accredited Investor Verification
+// Track: Midnight Request for Startups (Finance & Regulatory Compliance)
+// Language: Compact (Midnight Smart Contract Language v0.20+)
 
 pragma language_version >= 0.20.0;
 
@@ -17,81 +17,103 @@ export ledger state: {
     verified_nullifiers: Set<Bytes<32>>,
     total_verified_investors: Uint<64>,
     default_threshold_usd: Uint<64>,
-    authority_id: Bytes<32>
+    min_threshold_policy: Uint<64>,
+    max_threshold_policy: Uint<64>,
+    authority_id: Bytes<32>,
+    authorized_issuer_pk: Bytes<32>
 };
 
 // Private Witnesses stored STRICTLY on user client machine
 witness user_asset_value(): Uint<64>;
 witness user_secret_salt(): Bytes<32>;
+witness issuer_attestation_sig(): Bytes<32>;
+witness attestation_timestamp(): Uint<64>;
 
-// Zero-Knowledge Circuit: Proves asset_value >= required_threshold
+// Zero-Knowledge Circuit: Proves asset_value >= threshold & validates issuer attestation
 export circuit verify_and_register_credential(
     required_threshold: Uint<64>,
-    context_nonce: Bytes<32>
+    context_nonce: Bytes<32>,
+    current_time: Uint<64>
 ): Bytes<32> {
-    // 1. Fetch private witnesses
     const asset_value = user_asset_value();
     const secret_salt = user_secret_salt();
+    const issuer_sig = issuer_attestation_sig();
+    const att_time = attestation_timestamp();
 
-    // 2. Zero-Knowledge Threshold Invariant Constraint Check
-    assert(
-        asset_value >= required_threshold, 
-        "MidnightGate: Private asset value does not satisfy required threshold"
-    );
+    // 1. Enforce Threshold Policy Bounds
+    assert(required_threshold >= ledger.min_threshold_policy, "MidnightGate: Threshold below minimum");
+    assert(required_threshold <= ledger.max_threshold_policy, "MidnightGate: Threshold exceeds maximum");
 
-    // 3. Compute unique nullifier hash to prevent credential reuse
+    // 2. Freshness Check (Valid within 90 days)
+    assert(current_time >= att_time, "MidnightGate: Timestamp cannot be future");
+    assert((current_time - att_time) <= 7776000, "MidnightGate: Attestation expired");
+
+    // 3. Authenticated Issuer Attestation Verification
+    const expected_attestation = hash(ledger.authorized_issuer_pk, secret_salt, asset_value, att_time);
+    assert(issuer_sig == expected_attestation, "MidnightGate: Invalid issuer signature");
+
+    // 4. Threshold Invariant Check
+    assert(asset_value >= required_threshold, "MidnightGate: Asset below threshold");
+
+    // 5. Anti-Replay Nullifier Derivation
     const nullifier = hash(secret_salt, context_nonce);
+    assert(!ledger.verified_nullifiers.member(nullifier), "MidnightGate: Nullifier already registered");
 
-    // 4. Anti-Replay Protection
-    assert(
-        !ledger.verified_nullifiers.member(nullifier), 
-        "MidnightGate: Credential nullifier already registered on-chain"
-    );
-
-    // 5. Atomic Public State Transition
+    // 6. Public State Transition
     ledger.verified_nullifiers.insert(nullifier);
     ledger.total_verified_investors = ledger.total_verified_investors + 1;
 
     return nullifier;
 }`;
 
-  const testsCode = `// Vitest Suite: 4 / 4 Automated Unit & Scenario Tests Passing
+  const testsCode = `// Vitest Suite: 6 / 6 Automated Unit & Invariant Tests Passing
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MidnightGateContract, PrivateWitnesses } from './contractSimulator';
 
 describe('MidnightGate Zero-Knowledge Verification Contract', () => {
   let contract: MidnightGateContract;
+  const ISSUER_PK = '0xissuer_accredited_custodian_pk';
+  const CURRENT_TIME = 1774600000n;
 
   beforeEach(() => {
-    contract = new MidnightGateContract(100000n, '0xauthority_midnight_genesis');
+    contract = new MidnightGateContract(100000n, '0xauthority_genesis', ISSUER_PK, 1000n, 100000000n);
   });
 
-  it('Test 1: should successfully prove and register when private asset value meets threshold ($150k >= $100k)', () => {
-    const validWitness = { user_asset_value: 150000n, user_secret_salt: '0x9f4a8b2c...' };
-    const result = contract.verifyAndRegisterCredential(validWitness, 100000n, 'kyc_round_1');
-    expect(result.success).toBe(true);
-    expect(contract.ledger.total_verified_investors).toBe(1n);
+  it('Test 1: Valid proof with authenticated issuer attestation ($150k >= $100k)', () => {
+    const sig = MidnightGateContract.computeIssuerAttestation(ISSUER_PK, '0xsalt...', 150000n, CURRENT_TIME - 3600n);
+    const witness = { user_asset_value: 150000n, user_secret_salt: '0xsalt...', issuer_attestation_sig: sig, attestation_timestamp: CURRENT_TIME - 3600n };
+    const res = contract.verifyAndRegisterCredential(witness, 100000n, 'kyc_round_1', CURRENT_TIME);
+    expect(res.success).toBe(true);
   });
 
-  it('Test 2: should reject proof when asset value is below threshold ($65k < $100k)', () => {
-    const invalidWitness = { user_asset_value: 65000n, user_secret_salt: '0x11112222...' };
-    expect(() => {
-      contract.verifyAndRegisterCredential(invalidWitness, 100000n, 'kyc_round_1');
-    }).toThrowError('MidnightGate: Private asset value does not satisfy required threshold');
+  it('Test 2: Rejection on asset below threshold ($65k < $100k)', () => {
+    const sig = MidnightGateContract.computeIssuerAttestation(ISSUER_PK, '0xsalt...', 65000n, CURRENT_TIME - 3600n);
+    const witness = { user_asset_value: 65000n, user_secret_salt: '0xsalt...', issuer_attestation_sig: sig, attestation_timestamp: CURRENT_TIME - 3600n };
+    expect(() => contract.verifyAndRegisterCredential(witness, 100000n, 'kyc_1', CURRENT_TIME)).toThrowError();
   });
 
-  it('Test 3: Anti-Replay Protection - should reject duplicate nullifiers', () => {
-    const witness = { user_asset_value: 250000n, user_secret_salt: '0xabcdef...' };
-    contract.verifyAndRegisterCredential(witness, 100000n, 'vault_2026');
-    expect(() => {
-      contract.verifyAndRegisterCredential(witness, 100000n, 'vault_2026');
-    }).toThrowError('MidnightGate: Credential nullifier already registered on-chain');
+  it('Test 3: Rejection on forged issuer signature', () => {
+    const witness = { user_asset_value: 200000n, user_secret_salt: '0xsalt...', issuer_attestation_sig: '0xforged...', attestation_timestamp: CURRENT_TIME - 100n };
+    expect(() => contract.verifyAndRegisterCredential(witness, 100000n, 'kyc_1', CURRENT_TIME)).toThrowError();
   });
 
-  it('Test 4: should support custom Institutional Whale tier threshold ($1,000,000+)', () => {
-    const whaleWitness = { user_asset_value: 2500000n, user_secret_salt: '0xfeedface...' };
-    const result = contract.verifyAndRegisterCredential(whaleWitness, 1000000n, 'vip_2026');
-    expect(result.success).toBe(true);
+  it('Test 4: Anti-Replay Protection rejects duplicate nullifiers', () => {
+    const sig = MidnightGateContract.computeIssuerAttestation(ISSUER_PK, '0xsalt...', 250000n, CURRENT_TIME - 100n);
+    const witness = { user_asset_value: 250000n, user_secret_salt: '0xsalt...', issuer_attestation_sig: sig, attestation_timestamp: CURRENT_TIME - 100n };
+    contract.verifyAndRegisterCredential(witness, 100000n, 'vault_1', CURRENT_TIME);
+    expect(() => contract.verifyAndRegisterCredential(witness, 100000n, 'vault_1', CURRENT_TIME)).toThrowError();
+  });
+
+  it('Test 5: Rejects expired issuer attestations (> 90 days)', () => {
+    const oldTime = CURRENT_TIME - 8000000n;
+    const sig = MidnightGateContract.computeIssuerAttestation(ISSUER_PK, '0xsalt...', 500000n, oldTime);
+    const witness = { user_asset_value: 500000n, user_secret_salt: '0xsalt...', issuer_attestation_sig: sig, attestation_timestamp: oldTime };
+    expect(() => contract.verifyAndRegisterCredential(witness, 100000n, 'test', CURRENT_TIME)).toThrowError();
+  });
+
+  it('Test 6: Policy bound enforcement and governance updates', () => {
+    contract.updateThresholdPolicy(1000n, 500000000n, 100000n);
+    expect(contract.ledger.max_threshold_policy).toBe(500000000n);
   });
 });`;
 

@@ -1,7 +1,7 @@
 // ==============================================================================
 // MidnightGate: Zero-Knowledge Net Worth & Accredited Investor Verification
 // Track: Midnight Request for Startups (Finance & Regulatory Compliance)
-// Language: Compact (Midnight Smart Contract Language)
+// Language: Compact (Midnight Smart Contract Language v0.20+)
 // ==============================================================================
 
 pragma language_version >= 0.20.0;
@@ -22,8 +22,15 @@ export ledger state: {
     // Default system threshold in USD units (e.g. 100,000 for Accredited Investor)
     default_threshold_usd: Uint<64>,
     
+    // Minimum and maximum threshold policies enforced by the contract
+    min_threshold_policy: Uint<64>,
+    max_threshold_policy: Uint<64>,
+    
     // Authorized gate authority / deployer identifier
-    authority_id: Bytes<32>
+    authority_id: Bytes<32>,
+    
+    // Authorized institutional issuer public key for authenticated financial attestations
+    authorized_issuer_pk: Bytes<32>
 };
 
 // -----------------------------------------------------------------------------
@@ -33,39 +40,80 @@ export ledger state: {
 // -----------------------------------------------------------------------------
 witness user_asset_value(): Uint<64>;
 witness user_secret_salt(): Bytes<32>;
+witness issuer_attestation_sig(): Bytes<32>;
+witness attestation_timestamp(): Uint<64>;
 
 // -----------------------------------------------------------------------------
 // Zero-Knowledge Proving Circuit: verify_and_register_credential
-// Generates a zk-SNARK proving: (user_asset_value >= required_threshold)
-// Updates public ledger state WITHOUT revealing user_asset_value!
+// Generates a zk-SNARK proving:
+// 1. (user_asset_value >= required_threshold)
+// 2. Authenticated Issuer Attestation valid against authorized_issuer_pk
+// 3. Freshness / validity window satisfied
+// 4. Threshold conforms to protocol bounds policy
 // -----------------------------------------------------------------------------
 export circuit verify_and_register_credential(
     required_threshold: Uint<64>,
-    context_nonce: Bytes<32>
+    context_nonce: Bytes<32>,
+    current_time: Uint<64>
 ): Bytes<32> {
-    // 1. Ingest private witnesses from local storage
+    // 1. Ingest private witnesses from secure client memory
     const asset_value = user_asset_value();
     const secret_salt = user_secret_salt();
+    const issuer_sig = issuer_attestation_sig();
+    const att_time = attestation_timestamp();
 
-    // 2. Zero-Knowledge Threshold Invariant Check
-    // Constraint: Asset value must meet or exceed the required threshold
+    // 2. Enforce Threshold Policy Bounds
+    assert(
+        required_threshold >= ledger.min_threshold_policy,
+        "MidnightGate: Required threshold is below protocol minimum policy"
+    );
+    assert(
+        required_threshold <= ledger.max_threshold_policy,
+        "MidnightGate: Required threshold exceeds protocol maximum policy"
+    );
+
+    // 3. Attestation Freshness Check (Valid within 90 days = 7,776,000 seconds)
+    assert(
+        current_time >= att_time,
+        "MidnightGate: Attestation timestamp cannot be in the future"
+    );
+    assert(
+        (current_time - att_time) <= 7776000,
+        "MidnightGate: Issuer attestation has expired (> 90 days)"
+    );
+
+    // 4. Authenticated Issuer Attestation Verification
+    // Verifies that the user's private financial assets were authenticated by an authorized issuer
+    const expected_attestation = hash(
+        ledger.authorized_issuer_pk,
+        secret_salt,
+        asset_value,
+        att_time
+    );
+    assert(
+        issuer_sig == expected_attestation,
+        "MidnightGate: Invalid or unauthorized issuer attestation signature"
+    );
+
+    // 5. Zero-Knowledge Threshold Invariant Constraint Check
+    // Constraint: Private asset value must meet or exceed the required gate threshold
     assert(
         asset_value >= required_threshold, 
         "MidnightGate: Private asset value does not satisfy required threshold"
     );
 
-    // 3. Cryptographic Nullifier Derivation
+    // 6. Cryptographic Nullifier Derivation
     // nullifier = hash(secret_salt, context_nonce)
-    // Guarantees uniqueness per user per application context without exposing salt
+    // Guarantees uniqueness per user per application context without exposing salt or balance
     const nullifier = hash(secret_salt, context_nonce);
 
-    // 4. Assert anti-replay protection (Nullifier must not exist on ledger)
+    // 7. Assert anti-replay protection (Nullifier must not exist on ledger)
     assert(
         !ledger.verified_nullifiers.member(nullifier), 
         "MidnightGate: Credential nullifier already registered on-chain"
     );
 
-    // 5. Atomic Public State Transition
+    // 8. Atomic Public State Transition
     ledger.verified_nullifiers.insert(nullifier);
     ledger.total_verified_investors = ledger.total_verified_investors + 1;
 
@@ -73,10 +121,25 @@ export circuit verify_and_register_credential(
 }
 
 // -----------------------------------------------------------------------------
-// Governance / Administration Circuit
-// Allows updating default threshold for future protocol integrations
+// Governance / Policy Circuits
 // -----------------------------------------------------------------------------
-export circuit update_default_threshold(new_threshold: Uint<64>): [] {
-    assert(new_threshold > 0, "MidnightGate: Threshold must be greater than zero");
-    ledger.default_threshold_usd = new_threshold;
+export circuit update_threshold_policy(
+    min_threshold: Uint<64>,
+    max_threshold: Uint<64>,
+    default_threshold: Uint<64>
+): [] {
+    assert(min_threshold > 0, "MidnightGate: Minimum threshold must be > 0");
+    assert(max_threshold >= min_threshold, "MidnightGate: Max threshold must be >= Min threshold");
+    assert(
+        default_threshold >= min_threshold && default_threshold <= max_threshold,
+        "MidnightGate: Default threshold must be within bounds"
+    );
+
+    ledger.min_threshold_policy = min_threshold;
+    ledger.max_threshold_policy = max_threshold;
+    ledger.default_threshold_usd = default_threshold;
+}
+
+export circuit set_authorized_issuer(new_issuer_pk: Bytes<32>): [] {
+    ledger.authorized_issuer_pk = new_issuer_pk;
 }

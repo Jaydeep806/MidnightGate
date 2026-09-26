@@ -8,17 +8,23 @@ export declare namespace MidnightGateContract {
     verified_nullifiers: Set<string>;
     total_verified_investors: bigint;
     default_threshold_usd: bigint;
+    min_threshold_policy: bigint;
+    max_threshold_policy: bigint;
     authority_id: string;
+    authorized_issuer_pk: string;
   }
 
   export interface PrivateWitnesses {
     user_asset_value: bigint;
     user_secret_salt: string;
+    issuer_attestation_sig: string;
+    attestation_timestamp: bigint;
   }
 
   export interface CircuitProofInputs {
     required_threshold: bigint;
     context_nonce: string;
+    current_time: bigint;
   }
 
   export interface VerificationReceipt {

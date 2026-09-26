@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, Droplets, Sparkles, CheckCircle2, Loader2, ArrowRight } from 'lucide-react';
-import { midnightClient } from '../midnight/midnightClient';
+import { X, Droplets, Sparkles, CheckCircle2, Loader2, ArrowRight, ExternalLink } from 'lucide-react';
+import { MIDNIGHT_FAUCET_URL } from '../midnight/midnightClient';
 
 interface FaucetModalProps {
   isOpen: boolean;
@@ -17,7 +17,7 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
 }) => {
   const [addressInput, setAddressInput] = useState<string>(userAddress || 'mn_preprod1q9x7y9k4w2d8j3v6f7h8s0a1b2c3d4e5f6g7h8');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [claimResult, setClaimResult] = useState<{ txHash: string; amount: string } | null>(null);
+  const [claimResult, setClaimResult] = useState<{ amount: string } | null>(null);
 
   if (!isOpen) return null;
 
@@ -25,7 +25,8 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
     e.preventDefault();
     try {
       setIsLoading(true);
-      const result = await midnightClient.requestFaucetAirdrop(addressInput);
+      await new Promise(r => setTimeout(r, 600));
+      const result = { amount: '500.00 tDUST' };
       setClaimResult(result);
       onSuccess(result.amount);
     } catch (err) {
@@ -45,7 +46,7 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-bold text-white font-sans">Midnight Preprod Faucet</h2>
-              <p className="text-xs text-slate-400">Request free testnet tDUST tokens</p>
+              <p className="text-xs text-slate-400">Request testnet tDUST tokens</p>
             </div>
           </div>
           <button
@@ -62,14 +63,24 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white font-sans">Airdrop Received!</h3>
+              <h3 className="text-base font-bold text-white font-sans">Testnet Balance Loaded!</h3>
               <p className="text-xs text-slate-300 mt-1">
-                Successfully sent <strong className="text-emerald-400 font-mono">{claimResult.amount}</strong> to your account.
+                Allocated <strong className="text-emerald-400 font-mono">{claimResult.amount}</strong> to session.
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-midnight-950/80 border border-slate-800 font-mono text-xs text-slate-400 break-all text-left">
-              <span className="text-[10px] uppercase text-purple-400 block mb-1">Transaction Hash:</span>
-              {claimResult.txHash}
+            <div className="p-3 rounded-xl bg-midnight-950/80 border border-slate-800 text-xs text-slate-300 space-y-2 text-left">
+              <p className="text-[11px] text-slate-400">
+                For Lace Wallet on live Preprod, claim directly from the official faucet:
+              </p>
+              <a
+                href={MIDNIGHT_FAUCET_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-1.5 text-purple-300 hover:text-purple-200 font-semibold"
+              >
+                <span>Official Midnight Preprod Faucet</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
             <button
               onClick={onClose}
@@ -95,7 +106,7 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
             </div>
 
             <div className="p-3.5 rounded-xl bg-purple-950/30 border border-purple-900/40 text-xs text-slate-300 flex items-center justify-between">
-              <span>Airdrop Amount:</span>
+              <span>Sandbox Testnet Amount:</span>
               <strong className="text-purple-300 font-mono">500.00 tDUST</strong>
             </div>
 
@@ -107,16 +118,28 @@ export const FaucetModal: React.FC<FaucetModalProps> = ({
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Submitting Airdrop Transaction...</span>
+                  <span>Allocating Sandbox Tokens...</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4 text-amber-300" />
-                  <span>Request 500 tDUST</span>
+                  <span>Allocate 500 tDUST Testnet</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
+
+            <div className="pt-2 text-center">
+              <a
+                href={MIDNIGHT_FAUCET_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-slate-400 hover:text-purple-300 inline-flex items-center space-x-1 transition-colors"
+              >
+                <span>Or claim via Official Midnight Preprod Faucet</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
           </form>
         )}
       </div>

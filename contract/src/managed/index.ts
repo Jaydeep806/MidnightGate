@@ -8,17 +8,23 @@ export interface LedgerState {
   verified_nullifiers: Set<string>;
   total_verified_investors: bigint;
   default_threshold_usd: bigint;
+  min_threshold_policy: bigint;
+  max_threshold_policy: bigint;
   authority_id: string;
+  authorized_issuer_pk: string;
 }
 
 export interface PrivateWitnesses {
   user_asset_value: bigint;
   user_secret_salt: string;
+  issuer_attestation_sig: string;
+  attestation_timestamp: bigint;
 }
 
 export interface CircuitProofInputs {
   required_threshold: bigint;
   context_nonce: string;
+  current_time: bigint;
 }
 
 export interface VerificationReceipt {
@@ -31,9 +37,11 @@ export interface VerificationReceipt {
 
 export const CONTRACT_CIRCUITS = [
   'verify_and_register_credential',
-  'update_default_threshold'
+  'update_threshold_policy',
+  'set_authorized_issuer'
 ] as const;
 
 // Midnight Preprod Bech32m Contract Identifier
 export const DEFAULT_PREPROD_CONTRACT_ADDRESS = 'mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3';
 export const DEFAULT_PREPROD_CONTRACT_HEX = '02005a7d3b84f18e9a263d90cb15e3479a861d3f9b208dc750a92e105e4b986a7d';
+export const AUTHORIZED_ISSUER_PUBLIC_KEY = '0xissuer_accredited_custodian_pk';

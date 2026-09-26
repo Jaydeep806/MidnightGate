@@ -6,7 +6,7 @@
 [![Network](https://img.shields.io/badge/Network-Midnight%20Preprod%20(Chain%20420)-8b5cf6?logo=cardano)](https://midnight.network)
 [![Live Demo](https://img.shields.io/badge/🚀_Live%20DApp-moonlightmidnightgate.netlify.app-00C7B7?logo=netlify)](https://moonlightmidnightgate.netlify.app/)
 [![Product X Profile](https://img.shields.io/badge/Product_X_Profile-@MidnightGateZK-000000?logo=x)](https://x.com/MidnightGateZK)
-[![Tests Passing](https://img.shields.io/badge/Tests-4%2F4%20Passing-10b981)](./test/gate.test.ts)
+[![Tests Passing](https://img.shields.io/badge/Tests-6%2F6%20Passing-10b981)](./test/gate.test.ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
@@ -30,9 +30,9 @@
 | **7. User Feedback Loop Documentation** | [`FEEDBACK_REPORT.md`](./FEEDBACK_REPORT.md) | ✅ 70+ Form Responses |
 | **8. Google Feedback Form (Live)** | [Submit Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog) | ✅ Active & Public |
 | **9. Google Sheets Live Responses** | [View 70+ Live Responses Sheet](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing) | ✅ 70+ Verified Submissions |
-| **10. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 2 Circuits Verified |
+| **10. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 3 Circuits Verified |
 | **11. Preprod Deployed Contract Address** | `mn_contract_preprod1qq48m5x9d2a3y7k4h8v7c2d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3` | ✅ Deployed on Preprod |
-| **12. Automated Test Suite (4 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 4/4 Tests Passing |
+| **12. Automated Test Suite (6 Tests)** | [`test/gate.test.ts`](./test/gate.test.ts) | ✅ 6/6 Tests Passing |
 | **13. CI/CD Automated Workflow** | [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) | ✅ GitHub Actions Green |
 | **14. Official Approved Idea Reference** | [`PROPOSAL.md`](./PROPOSAL.md) *(Age / Eligibility Gate & Confidential Credentials)* | ✅ Approved Track |
 | **15. Formal ZK Privacy Threat Model** | [`PRIVACY_MODEL.md`](./PRIVACY_MODEL.md) & [Jump to Privacy Section ⬇️](#-comprehensive-privacy-model-public-state-vs-private-witness) | ✅ Full Analysis |
@@ -264,9 +264,9 @@ npm test
 ```
 *Expected Output:*
 ```text
- ✓ gate.test.ts (4 tests)
+ ✓ gate.test.ts (6 tests)
  Test Files  1 passed (1)
-      Tests  4 passed (4)
+      Tests  6 passed (6)
 ```
 
 ### 3. Run the Frontend Locally (Level 2 Requirement)
@@ -283,10 +283,12 @@ Open your browser at `http://localhost:5173`.
 
 | Test Case | Objective | Status |
 | :--- | :--- | :---: |
-| **Test 1: Accredited Investor Threshold** | Verifies asset $150k satisfies $100k gate & updates ledger | ✅ PASSED |
+| **Test 1: Accredited Investor & Issuer Attestation** | Verifies asset $150k satisfies $100k gate with valid issuer signature | ✅ PASSED |
 | **Test 2: Sub-Threshold Rejection** | Verifies asset $65k fails circuit assertion & leaves ledger intact | ✅ PASSED |
-| **Test 3: Anti-Replay Protection** | Rejects duplicate nullifier hash to prevent credential reuse | ✅ PASSED |
-| **Test 4: Institutional Whale Tier** | Verifies custom $1,000,000+ gate for high-net-worth witness | ✅ PASSED |
+| **Test 3: Forged / Invalid Signature Rejection** | Rejects unauthenticated or tampered issuer signatures | ✅ PASSED |
+| **Test 4: Anti-Replay Protection** | Rejects duplicate nullifier hash to prevent credential reuse | ✅ PASSED |
+| **Test 5: Attestation Freshness Window** | Rejects expired attestations older than 90 days | ✅ PASSED |
+| **Test 6: Policy Bounds & Governance** | Enforces minimum/maximum threshold policy limits and updates | ✅ PASSED |
 
 ---
 

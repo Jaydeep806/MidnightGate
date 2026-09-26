@@ -4,30 +4,58 @@ export interface LedgerState {
   verified_nullifiers: Set<string>;
   total_verified_investors: bigint;
   default_threshold_usd: bigint;
+  min_threshold_policy: bigint;
+  max_threshold_policy: bigint;
   authority_id: string;
+  authorized_issuer_pk: string;
 }
 
 export interface PrivateWitnesses {
   user_asset_value: bigint;
   user_secret_salt: string;
+  issuer_attestation_sig: string;
+  attestation_timestamp: bigint;
 }
 
 export class MidnightGateContract {
   public ledger: LedgerState;
 
-  constructor(defaultThresholdUSD: bigint = 100000n, authorityId: string = '0xauthority1234') {
+  constructor(
+    defaultThresholdUSD: bigint = 100000n,
+    authorityId: string = '0xauthority_midnight_genesis',
+    authorizedIssuerPk: string = '0xissuer_accredited_custodian_pk',
+    minThreshold: bigint = 1000n,
+    maxThreshold: bigint = 100000000n
+  ) {
     this.ledger = {
       verified_nullifiers: new Set<string>(),
       total_verified_investors: 0n,
       default_threshold_usd: defaultThresholdUSD,
-      authority_id: authorityId
+      min_threshold_policy: minThreshold,
+      max_threshold_policy: maxThreshold,
+      authority_id: authorityId,
+      authorized_issuer_pk: authorizedIssuerPk
     };
+  }
+
+  /**
+   * Cryptographic hash simulation matching Compact's hash(issuer_pk, salt, asset_value, timestamp)
+   */
+  public static computeIssuerAttestation(
+    issuerPk: string,
+    secretSalt: string,
+    assetValue: bigint,
+    timestamp: bigint
+  ): string {
+    const hash = createHash('sha256');
+    hash.update(`${issuerPk}:${secretSalt}:${assetValue.toString()}:${timestamp.toString()}`);
+    return `0x${hash.digest('hex')}`;
   }
 
   /**
    * Cryptographic hash simulation matching Compact's hash(salt, context)
    */
-  private computeNullifier(secretSalt: string, contextNonce: string): string {
+  public computeNullifier(secretSalt: string, contextNonce: string): string {
     const hash = createHash('sha256');
     hash.update(`${secretSalt}:${contextNonce}`);
     return `0x${hash.digest('hex')}`;
@@ -35,32 +63,56 @@ export class MidnightGateContract {
 
   /**
    * Simulates the Compact circuit: verify_and_register_credential
-   * @param witness Private witness provided locally on client machine
-   * @param requiredThreshold Public parameter indicating minimum required threshold
-   * @param contextNonce Public context/application identifier to prevent replay
    */
   public verifyAndRegisterCredential(
     witness: PrivateWitnesses,
     requiredThreshold: bigint,
-    contextNonce: string
+    contextNonce: string,
+    currentTime: bigint = BigInt(Math.floor(Date.now() / 1000))
   ): { success: boolean; nullifier: string; newTotal: bigint } {
-    // 1. Private Witness Ingestion
-    const { user_asset_value, user_secret_salt } = witness;
+    const { user_asset_value, user_secret_salt, issuer_attestation_sig, attestation_timestamp } = witness;
 
-    // 2. Circuit Invariant Constraint Check
+    // 1. Enforce Threshold Policy Bounds
+    if (requiredThreshold < this.ledger.min_threshold_policy) {
+      throw new Error('MidnightGate: Required threshold is below protocol minimum policy');
+    }
+    if (requiredThreshold > this.ledger.max_threshold_policy) {
+      throw new Error('MidnightGate: Required threshold exceeds protocol maximum policy');
+    }
+
+    // 2. Attestation Freshness Check (90 days = 7,776,000 seconds)
+    if (currentTime < attestation_timestamp) {
+      throw new Error('MidnightGate: Attestation timestamp cannot be in the future');
+    }
+    if (currentTime - attestation_timestamp > 7776000n) {
+      throw new Error('MidnightGate: Issuer attestation has expired (> 90 days)');
+    }
+
+    // 3. Authenticated Issuer Attestation Verification
+    const expectedSig = MidnightGateContract.computeIssuerAttestation(
+      this.ledger.authorized_issuer_pk,
+      user_secret_salt,
+      user_asset_value,
+      attestation_timestamp
+    );
+    if (issuer_attestation_sig !== expectedSig) {
+      throw new Error('MidnightGate: Invalid or unauthorized issuer attestation signature');
+    }
+
+    // 4. Threshold Constraint Check
     if (user_asset_value < requiredThreshold) {
       throw new Error('MidnightGate: Private asset value does not satisfy required threshold');
     }
 
-    // 3. Nullifier Derivation
+    // 5. Nullifier Derivation
     const nullifier = this.computeNullifier(user_secret_salt, contextNonce);
 
-    // 4. Ledger Member Check (Replay Prevention)
+    // 6. Anti-Replay Check
     if (this.ledger.verified_nullifiers.has(nullifier)) {
       throw new Error('MidnightGate: Credential nullifier already registered on-chain');
     }
 
-    // 5. Public Ledger State Transition
+    // 7. Ledger State Transition
     this.ledger.verified_nullifiers.add(nullifier);
     this.ledger.total_verified_investors += 1n;
 
@@ -72,12 +124,24 @@ export class MidnightGateContract {
   }
 
   /**
-   * Circuit to update threshold
+   * Circuit to update threshold policy
    */
-  public updateDefaultThreshold(newThreshold: bigint): void {
-    if (newThreshold <= 0n) {
-      throw new Error('MidnightGate: Threshold must be greater than zero');
+  public updateThresholdPolicy(minThreshold: bigint, maxThreshold: bigint, defaultThreshold: bigint): void {
+    if (minThreshold <= 0n) {
+      throw new Error('MidnightGate: Minimum threshold must be > 0');
     }
-    this.ledger.default_threshold_usd = newThreshold;
+    if (maxThreshold < minThreshold) {
+      throw new Error('MidnightGate: Max threshold must be >= Min threshold');
+    }
+    if (defaultThreshold < minThreshold || defaultThreshold > maxThreshold) {
+      throw new Error('MidnightGate: Default threshold must be within bounds');
+    }
+    this.ledger.min_threshold_policy = minThreshold;
+    this.ledger.max_threshold_policy = maxThreshold;
+    this.ledger.default_threshold_usd = defaultThreshold;
+  }
+
+  public setAuthorizedIssuer(newIssuerPk: string): void {
+    this.ledger.authorized_issuer_pk = newIssuerPk;
   }
 }

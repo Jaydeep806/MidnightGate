@@ -81,7 +81,7 @@ export const App: React.FC = () => {
     addToast('Wallet Disconnected', 'Session cleared', 'info');
   };
 
-  const handleGenerateProof = async (privateAssetAmountUSD: number) => {
+  const handleGenerateProof = async (privateAssetAmountUSD: number, forceInvalidSig: boolean = false) => {
     try {
       setIssuedCredential(null);
       const credential = await midnightClient.executeVerificationFlow(
@@ -92,7 +92,8 @@ export const App: React.FC = () => {
         (step, log) => {
           setProverStep(step);
           setProverLog(log);
-        }
+        },
+        forceInvalidSig
       );
       setIssuedCredential(credential);
       addToast('Proof Confirmed!', `Credential registered on-chain in Block #${credential.blockHeight}`, 'success');
