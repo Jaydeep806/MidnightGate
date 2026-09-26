@@ -22,12 +22,12 @@
 | Rise In Required Checklist Item | Direct Verified Link / Resource | Status |
 | :--- | :--- | :---: |
 | **1. Public GitHub Repository** | [github.com/Jaydeep806/MidnightGate](https://github.com/Jaydeep806/MidnightGate) | ✅ Active & Public |
-| **2. Minimum Meaningful Commits** | [30+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 30+ Commits (Req: 30+) |
+| **2. Minimum Meaningful Commits** | [35+ Commits on `main`](https://github.com/Jaydeep806/MidnightGate/commits/main) | ✅ 35+ Commits (Req: 30+) |
 | **3. Live Production DApp** | [moonlightmidnightgate.netlify.app](https://moonlightmidnightgate.netlify.app/) | ✅ Live & Responsive |
 | **4. Demo Video Walkthrough** | [Watch 1080p Demo on YouTube](https://youtu.be/SwvZJFEYK2M) | ✅ Live on YouTube |
 | **5. Product X (Twitter) Profile** | [@MidnightGateZK on X](https://x.com/MidnightGateZK) | ✅ Building in Public |
-| **6. 70 Preprod User Wallets (Verifiable)** | [`PREPROD_USERS.md`](./PREPROD_USERS.md) | ✅ 70/70 On-Chain Wallets |
-| **7. User Feedback Loop Documentation** | [`FEEDBACK_REPORT.md`](./FEEDBACK_REPORT.md) | ✅ 70+ Form Responses |
+| **6. 70 Preprod User Wallets (Verifiable)** | [`PREPROD_USERS.md`](./PREPROD_USERS.md) & [`LAUNCH_USERS.md`](./LAUNCH_USERS.md) | ✅ 70/70 On-Chain Wallets |
+| **7. User Feedback Loop Documentation** | [`FEEDBACK_REPORT.md`](./FEEDBACK_REPORT.md) & [`FEEDBACK.md`](./FEEDBACK.md) | ✅ 70+ Form Responses |
 | **8. Google Feedback Form (Live)** | [Submit Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSd7gQXE2tMCxgV1GMC7e9RWJBlKImjeCtULvN1wE5Su5-848Q/viewform?usp=dialog) | ✅ Active & Public |
 | **9. Google Sheets Live Responses** | [View 70+ Live Responses Sheet](https://docs.google.com/spreadsheets/d/1NqoGdilv4CYFcUuutxkmVZ2XWm6hf9lu503AIO8rpPs/edit?usp=sharing) | ✅ 70+ Verified Submissions |
 | **10. Compact Smart Contract (v0.20)** | [`contract/src/gate.compact`](./contract/src/gate.compact) | ✅ 3 Circuits Verified |
@@ -207,7 +207,7 @@ MidnightGate/
 │   │       └── gate.d.ts
 │   └── package.json
 ├── test/
-│   ├── gate.test.ts         # Automated test suite: 4/4 passing tests (Level 3)
+│   ├── gate.test.ts         # Automated test suite: 6/6 passing tests (Level 3)
 │   ├── contractSimulator.ts # Midnight dual-state ledger simulator
 │   ├── vitest.config.ts
 │   └── package.json
@@ -230,8 +230,15 @@ MidnightGate/
 │   └── cicd-pipeline.png
 ├── DEMO_WALKTHROUGH.md      # Step-by-step walkthrough guide
 ├── DEPLOYMENT_PREPROD_GUIDE.md # Preprod deployment guide
+├── FEEDBACK.md              # Level 6 User feedback report & iterations
+├── FEEDBACK_REPORT.md       # Full structured user testing documentation
 ├── FRONTEND_INTEGRATION.md  # Frontend integration guide
+├── LAUNCH_USERS.md          # 70 Preprod launch user wallets registry
+├── LICENSE                  # MIT License
+├── MidnightGate_PitchDeck.pdf # Product presentation document
+├── MidnightGate_Presentation.pptx # Product presentation slides
 ├── PITCH_DECK.md            # Product proposal & presentation
+├── PREPROD_USERS.md         # 70 Preprod user wallet addresses & nullifiers
 ├── PRIVACY_MODEL.md         # Formal ZK privacy & threat model
 ├── PROPOSAL.md              # Official proposal & idea track reference
 ├── SECURITY_AUDIT_REPORT.md # ZK circuit & contract audit report
@@ -289,6 +296,21 @@ Open your browser at `http://localhost:5173`.
 | **Test 4: Anti-Replay Protection** | Rejects duplicate nullifier hash to prevent credential reuse | ✅ PASSED |
 | **Test 5: Attestation Freshness Window** | Rejects expired attestations older than 90 days | ✅ PASSED |
 | **Test 6: Policy Bounds & Governance** | Enforces minimum/maximum threshold policy limits and updates | ✅ PASSED |
+
+---
+
+## 🔄 Level 6: Supermoon — User Feedback Loop & Shipped Iterations
+
+Based directly on user feedback received from **70+ unique Preprod wallet users** (documented in [`FEEDBACK_REPORT.md`](./FEEDBACK_REPORT.md) and [`FEEDBACK.md`](./FEEDBACK.md)), we shipped 4 major technical improvements:
+
+1. **🛡️ Authenticated Financial Issuer Attestations**:
+   Extended [`contract/src/gate.compact`](./contract/src/gate.compact) with `authorized_issuer_pk` and `issuer_attestation_sig` witness verification, ensuring private net-worth values are cryptographically signed by authorized financial custodians/oracles within a 90-day validity window.
+2. **🔬 Dual-State Invariant & Rejection Testing**:
+   Enhanced [`frontend/src/components/ProofGenerator.tsx`](./frontend/src/components/ProofGenerator.tsx) with evaluator buttons for testing valid proofs ($150k), invariant failure ($65k), and forged signature rejection.
+3. **⚡ Dynamic Proof Synthesis & Nullifier Lifecycle**:
+   Updated [`frontend/src/midnight/midnightClient.ts`](./frontend/src/midnight/midnightClient.ts) to manage dynamic client-side witness derivation, frontier proof synthesis, and clean on-chain registration without mock static data.
+4. **🚰 Official Preprod Faucet Integration**:
+   Directly integrated official Midnight Preprod Faucet links in [`frontend/src/components/FaucetModal.tsx`](./frontend/src/components/FaucetModal.tsx).
 
 ---
 
